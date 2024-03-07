@@ -19,4 +19,9 @@ export class UserInMemoryRepository implements UserRepository {
   isUserSaved(user: User): boolean {
     return this.users.some((u) => u.id === user.id)
   }
+
+  addUsers(users: User[]): UserInMemoryRepository {
+    this.users = users
+    return this
+  }
 }
