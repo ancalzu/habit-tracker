@@ -12,7 +12,6 @@ export class HabitMother {
 
   build(): Habit {
     return Habit.create(
-      this.id,
       this.habitName,
       this.frequency,
       this.duration,

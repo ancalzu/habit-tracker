@@ -1,5 +1,5 @@
 import { RegisterUserCommandHandler } from '../../application/user/register-user.command-handler'
-import { Body, Controller, Post, Res, Get } from '@nestjs/common'
+import { Body, Controller, Post, Res } from '@nestjs/common'
 import { RegisterUserCommand } from '../../application/user/register-user.command'
 import { v4 as uuidv4 } from 'uuid'
 import { Response } from 'express'

@@ -1,7 +1,10 @@
 import { InvalidNameError } from './invalid-name.error'
 
 export class Name {
-  constructor(readonly value: string) {}
+  public readonly valueName: string
+  constructor(readonly value: string) {
+    this.valueName = value
+  }
 
   static create(value: string): Name {
     if (value.length < 3 || value.length > 50) {

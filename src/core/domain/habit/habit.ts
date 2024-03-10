@@ -1,21 +1,19 @@
-import { Schedule } from './schedule'
 import { HabitId } from './habit.id'
 import { Name } from './name'
-import { HabitCreateDate } from './createDate'
-import { HabitupdateDate } from './updateDate'
 
 export class Habit {
   private constructor(
-    readonly id: HabitId,
+    readonly id: string,
     readonly name: Name,
-    readonly schedule: Schedule,
+    readonly frequency: number,
+    readonly duration: number,
+    readonly restTime: number,
     readonly userId: string,
-    readonly createDate: HabitCreateDate,
-    readonly updateDate: HabitupdateDate,
+    readonly createDate: Date,
+    readonly updateDate: Date,
   ) {}
 
   static create(
-    id: string,
     name: string,
     frequency: number,
     duration: number,
@@ -24,17 +22,22 @@ export class Habit {
     createDate = new Date(),
     updateDate = new Date(),
   ): Habit {
-    const habitId = HabitId.create(id)
+    const habitId = HabitId.generate()
     const habitName = Name.create(name)
-    const schedule = Schedule.create(frequency, duration, restTime)
-    const habitCreateDate = HabitCreateDate.create(createDate)
-    const habitupdateDate = HabitupdateDate.create(updateDate)
+    const frequencyHabit = frequency
+    const durationHabit = duration
+    const restTimeHabit = restTime
+    const userIdHabit = userId
+    const habitCreateDate = createDate
+    const habitupdateDate = updateDate
 
     return new Habit(
       habitId,
       habitName,
-      schedule,
-      userId,
+      frequencyHabit,
+      durationHabit,
+      restTimeHabit,
+      userIdHabit,
       habitCreateDate,
       habitupdateDate,
     )
