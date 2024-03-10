@@ -1,5 +1,5 @@
 import { RegisterUserCommandHandler } from '../../application/user/register-user.command-handler'
-import { Body, Controller, Post, Res } from '@nestjs/common'
+import { Body, Controller, Post, Res, Get } from '@nestjs/common'
 import { RegisterUserCommand } from '../../application/user/register-user.command'
 import { v4 as uuidv4 } from 'uuid'
 import { Response } from 'express'
@@ -14,11 +14,10 @@ export class CreateUserDto {
 export class CreateUserController {
   constructor(private commandHandler: RegisterUserCommandHandler) {}
 
-  @Post('users')
+  @Post('user')
   handle(@Body() request: CreateUserDto, @Res() response: Response) {
     const id = uuidv4()
 
-    // We can remove this try/catch using a NestJS decorator
     try {
       this.commandHandler.handle(
         new RegisterUserCommand(id, request.username, request.fullname),

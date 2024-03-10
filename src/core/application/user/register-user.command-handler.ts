@@ -14,9 +14,7 @@ export class RegisterUserCommandHandler {
     if (this.repository.findByUsername(command.username)) {
       throw UserAlreadyExistsError.withUsername(command.username)
     }
-
     const user = new User(command.id, command.username, command.fullname)
-
-    this.repository.save(user)
+    this.repository.saveUser(user)
   }
 }

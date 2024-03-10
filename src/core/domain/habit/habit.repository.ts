@@ -4,4 +4,5 @@ import { Name } from './name'
 export interface HabitRepository {
   save(habit: Habit): void
   findByName(name: Name): Habit | undefined
+  listAll(): Habit[]
 }

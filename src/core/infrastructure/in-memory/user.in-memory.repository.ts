@@ -1,11 +1,21 @@
 import { User } from 'src/core/domain/user/user'
 import { UserRepository } from '../../domain/user/user.repository'
-
+import { UserModel } from '../database/models/users.models'
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+@Injectable()
 export class UserInMemoryRepository implements UserRepository {
   private users: User[] = []
 
-  save(user: User): void {
-    this.users.push(user)
+  constructor(
+    @InjectRepository(UserModel) private postRepository: Repository<UserModel>,
+  ) {}
+
+  saveUser(user: User): void {
+    const userModel = new UserModel(user.id, user.username, user.fullname)
+    this.users.push(userModel)
+    this.postRepository.save(userModel)
   }
 
   findByUsername(username: string): User | undefined {

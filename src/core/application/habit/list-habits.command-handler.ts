@@ -1,15 +1,11 @@
 import { HabitRepository } from '../../domain/habit/habit.repository'
-import { UserRepository } from '../../domain/user/user.repository'
 import { Habit } from '../../domain/habit/habit'
 import { CreateHabitCommand } from './create-habit.command'
 import { DuplicatedHabitNameError } from './duplicated-habit-name.error'
 import { Name } from '../../domain/habit/name'
 
-export class CreateHabitCommandHandler {
-  constructor(
-    private readonly repository: HabitRepository,
-    private readonly userRepository: UserRepository,
-  ) {}
+export class ListHabitsCommandHandler {
+  constructor(private readonly repository: HabitRepository) {}
 
   handle(command: CreateHabitCommand): void {
     const name = Name.create(command.name)

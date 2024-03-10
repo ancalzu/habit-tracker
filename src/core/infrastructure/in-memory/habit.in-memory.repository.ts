@@ -3,6 +3,9 @@ import { Habit } from '../../domain/habit/habit'
 import { Name } from '../../domain/habit/name'
 
 export class HabitInMemoryRepository implements HabitRepository {
+  listAll(): Habit[] {
+    throw new Error('Method not implemented.')
+  }
   habits: Habit[] = []
 
   save(habit: Habit): void {
