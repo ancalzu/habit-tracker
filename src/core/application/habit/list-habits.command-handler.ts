@@ -1,10 +1,18 @@
+import { Inject, Injectable } from '@nestjs/common'
 import { HabitRepository } from '../../domain/habit/habit.repository'
-import { CreateHabitCommand } from './create-habit.command'
-
+import { ListHabitByUserCommand } from './list-habits.command'
+import { NoHabitUserError } from './no-habit-user-id.error'
+@Injectable()
 export class ListHabitsCommandHandler {
-  constructor(private readonly repository: HabitRepository) {}
+  constructor(
+    @Inject(HabitRepository) private readonly habitrepository: HabitRepository,
+  ) {}
 
-  handle(command: CreateHabitCommand): void {
-    
+  handle(command: ListHabitByUserCommand): void {
+    if (!this.habitrepository.listAllbyUser(command.userId)) {
+      throw NoHabitUserError.withUserId(command.userId)
+    }
+
+    this.habitrepository.listAllbyUser(command.userId)
   }
 }

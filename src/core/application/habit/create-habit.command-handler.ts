@@ -17,7 +17,7 @@ export class CreateHabitCommandHandler {
     if (this.habitrepository.findByName(name)) {
       throw DuplicatedHabitNameError.withName(command.name)
     }
-    if (this.habitrepository.findByUserById(name, command.userId)) {
+    if (this.habitrepository.findUniqueHabitByUser(name, command.userId)) {
       throw DuplicatedHabitUserError.withUserId(command.name, command.userId)
     }
 
