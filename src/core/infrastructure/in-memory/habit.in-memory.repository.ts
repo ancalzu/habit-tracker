@@ -27,6 +27,7 @@ export class HabitInMemoryRepository implements HabitRepository {
       habit.userId,
       habit.createDate,
       habit.updateDate,
+      habit.wearableDeviceId,
     )
     this.postRepository.save(habitModel)
   }
@@ -61,6 +62,7 @@ export class HabitInMemoryRepository implements HabitRepository {
           habit.userId,
           habit.createDate,
           habit.updateDate,
+          habit.wearableDeviceIdHabit,
         ),
       )
     })

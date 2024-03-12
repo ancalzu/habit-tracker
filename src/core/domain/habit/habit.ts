@@ -11,6 +11,7 @@ export class Habit {
     readonly userId: string,
     readonly createDate: Date,
     readonly updateDate: Date,
+    readonly wearableDeviceId: string,
   ) {}
 
   static create(
@@ -19,8 +20,7 @@ export class Habit {
     duration: number,
     restTime: number,
     userId: string,
-    createDate = new Date(),
-    updateDate = new Date(),
+    wearableDeviceId: string,
   ): Habit {
     const habitId = HabitId.generate()
     const habitName = Name.create(name)
@@ -28,9 +28,9 @@ export class Habit {
     const durationHabit = duration
     const restTimeHabit = restTime
     const userIdHabit = userId
-    const habitCreateDate = createDate
-    const habitupdateDate = updateDate
-
+    const habitCreateDate = new Date()
+    const habitupdateDate = new Date()
+    const wearableDeviceIdHabit = wearableDeviceId
     return new Habit(
       habitId,
       habitName,
@@ -40,6 +40,7 @@ export class Habit {
       userIdHabit,
       habitCreateDate,
       habitupdateDate,
+      wearableDeviceIdHabit,
     )
   }
 

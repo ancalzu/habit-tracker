@@ -9,6 +9,7 @@ export class HabitMother {
   private duration = 60
   private restTime = 600
   private userId = uuidv4()
+  private wearableDeviceIdHabit = ''
 
   build(): Habit {
     return Habit.create(
@@ -17,6 +18,7 @@ export class HabitMother {
       this.duration,
       this.restTime,
       this.userId,
+      this.wearableDeviceIdHabit,
     )
   }
 
