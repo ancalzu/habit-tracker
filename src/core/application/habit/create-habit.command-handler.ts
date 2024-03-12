@@ -20,6 +20,14 @@ export class CreateHabitCommandHandler {
     if (this.habitrepository.findUniqueHabitByUser(name, command.userId)) {
       throw DuplicatedHabitUserError.withUserId(command.name, command.userId)
     }
+    let wearableDeviceIdHabit = command.wearableDeviceIdHabit
+    if (
+      !command.wearableDeviceIdHabit ||
+      command.wearableDeviceIdHabit === null ||
+      command.wearableDeviceIdHabit === undefined
+    ) {
+      wearableDeviceIdHabit = ''
+    }
 
     const habit = Habit.create(
       command.name,
@@ -27,6 +35,7 @@ export class CreateHabitCommandHandler {
       command.duration,
       command.restTime,
       command.userId,
+      wearableDeviceIdHabit,
     )
     this.habitrepository.save(habit)
   }

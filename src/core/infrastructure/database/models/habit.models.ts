@@ -27,6 +27,9 @@ export class HabitModel {
   @Column()
   updateDate: Date
 
+  @Column()
+  wearableDeviceIdHabit: string
+
   constructor(
     id: string,
     name: string,
@@ -36,6 +39,7 @@ export class HabitModel {
     userId: string,
     createDate: Date,
     updateDate: Date,
+    wearableDeviceIdHabit: string,
   ) {
     this.id = id
     this.name = name
@@ -45,5 +49,6 @@ export class HabitModel {
     this.userId = userId
     this.createDate = createDate
     this.updateDate = updateDate
+    this.wearableDeviceIdHabit = wearableDeviceIdHabit
   }
 }

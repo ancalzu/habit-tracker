@@ -12,6 +12,7 @@ export class CreateHabitDto {
   duration: number
   restTime: number
   userId: string
+  wearableDeviceIdHabit: string
 }
 
 @Controller()
@@ -32,6 +33,7 @@ export class CreateHabitController {
       userId: request.userId,
       createDate: createDate,
       updateDate: updateDate,
+      wearableDeviceIdHabit: request.wearableDeviceIdHabit,
     }
 
     try {

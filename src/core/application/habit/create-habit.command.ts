@@ -6,6 +6,7 @@ export class CreateHabitCommand {
   duration: number
   restTime: number
   userId: string
+  wearableDeviceIdHabit: string
 
   constructor(params: {
     name: string
@@ -13,11 +14,13 @@ export class CreateHabitCommand {
     duration: number
     restTime: number
     userId: string
+    wearableDeviceIdHabit: string
   }) {
     this.name = params.name
     this.frequency = params.frequency
     this.duration = params.duration
     this.restTime = params.restTime
     this.userId = params.userId
+    this.wearableDeviceIdHabit = params.wearableDeviceIdHabit
   }
 }
