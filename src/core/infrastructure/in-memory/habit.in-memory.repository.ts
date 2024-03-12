@@ -46,12 +46,26 @@ export class HabitInMemoryRepository implements HabitRepository {
     )
   }
 
-  listAllbyUser(userId: string): Habit[] {
-    const userHabits = this.postRepository.findBy({ userId: userId })
-    // const UserHabits = this.postRepository.find({
-    //   where: { userId },
-    // })
-    return userHabits
+  async listAllbyUser(userId: string): Promise<Habit[]> {
+    const userHabits = await this.postRepository.findBy({ userId: userId })
+    const habitList: Habit[] = []
+
+    userHabits.forEach((habit) => {
+      habitList.push(
+        new Habit(
+          habit.id,
+          new Name(habit.name),
+          habit.frequency,
+          habit.duration,
+          habit.restTime,
+          habit.userId,
+          habit.createDate,
+          habit.updateDate,
+        ),
+      )
+    })
+
+    return habitList
   }
 
   // isHabitSaved(habit: Habit): boolean {

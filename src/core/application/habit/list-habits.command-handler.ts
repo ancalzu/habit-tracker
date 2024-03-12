@@ -8,11 +8,12 @@ export class ListHabitsCommandHandler {
     @Inject(HabitRepository) private readonly habitrepository: HabitRepository,
   ) {}
 
-  handle(command: ListHabitByUserCommand): void {
-    if (!this.habitrepository.listAllbyUser(command.userId)) {
+  handle(command: ListHabitByUserCommand): any {
+    const hasHabits = this.habitrepository.listAllbyUser(command.userId)
+    if (!hasHabits) {
       throw NoHabitUserError.withUserId(command.userId)
     }
 
-    this.habitrepository.listAllbyUser(command.userId)
+    return hasHabits
   }
 }
