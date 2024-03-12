@@ -6,7 +6,7 @@ export interface HabitRepository {
   findByName(name: Name): Habit | undefined
   findUniqueHabitByUser(name: Name, userId: string): Habit | undefined
   listAll(): Habit[]
-  listAllbyUser(userId: string): Habit[]
+  listAllbyUser(userId: string): Promise<Habit[]> | void
 }
 
 export const HabitRepository = Symbol('HabitRepository')

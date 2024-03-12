@@ -2,7 +2,7 @@ import { HabitId } from './habit.id'
 import { Name } from './name'
 
 export class Habit {
-  private constructor(
+  public constructor(
     readonly id: string,
     readonly name: Name,
     readonly frequency: number,
@@ -42,4 +42,6 @@ export class Habit {
       habitupdateDate,
     )
   }
+
+  //TODO: FROM PRIMITIVES FOR ACCESS
 }
