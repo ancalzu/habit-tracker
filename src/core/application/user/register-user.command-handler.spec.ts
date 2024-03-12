@@ -1,6 +1,6 @@
 import { RegisterUserCommand } from './register-user.command'
 import { RegisterUserCommandHandler } from './register-user.command-handler'
-import { UserInMemoryRepository } from '../../infrastructure/user/user.in-memory.repository'
+import { UserInMemoryRepository } from '../../infrastructure/in-memory/user.in-memory.repository'
 import { UserMother } from '../../test/user/user.mother'
 
 describe('RegisterUserCommandHandler', () => {

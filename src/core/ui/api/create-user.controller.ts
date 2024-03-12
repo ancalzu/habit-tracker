@@ -14,11 +14,10 @@ export class CreateUserDto {
 export class CreateUserController {
   constructor(private commandHandler: RegisterUserCommandHandler) {}
 
-  @Post('users')
+  @Post('user')
   handle(@Body() request: CreateUserDto, @Res() response: Response) {
     const id = uuidv4()
 
-    // We can remove this try/catch using a NestJS decorator
     try {
       this.commandHandler.handle(
         new RegisterUserCommand(id, request.username, request.fullname),
