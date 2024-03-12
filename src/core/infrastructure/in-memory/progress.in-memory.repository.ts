@@ -15,6 +15,7 @@ export class ProgressInMemoryRepository implements ProgressRepository {
   save(progress: Progress): void {
     const progressModel = new ProgressModel(
       progress.id,
+      progress.habitId,
       progress.registryDate,
       progress.notes,
     )

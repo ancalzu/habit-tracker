@@ -10,24 +10,36 @@ import { CreateHabitController } from './core/ui/api/create-habit.controller'
 import { CreateHabitCommandHandler } from './core/application/habit/create-habit.command-handler'
 import { HabitRepository } from './core/domain/habit/habit.repository'
 import { HabitInMemoryRepository } from './core/infrastructure/in-memory/habit.in-memory.repository'
+import { ProgressModel } from './core/infrastructure/database/models/progress.models'
+import { CreateProgressController } from './core/ui/api/create-progress.controller'
+import { ProgressInMemoryRepository } from './core/infrastructure/in-memory/progress.in-memory.repository'
+import { ProgressRepository } from './core/domain/progress/progress.repository'
+import { CreateProgressCommandHandler } from './core/application/progress/create-progress.command-handler'
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'db.sqlite',
-      entities: [UserModel, HabitModel],
+      entities: [UserModel, HabitModel, ProgressModel],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([UserModel]),
     TypeOrmModule.forFeature([HabitModel]),
+    TypeOrmModule.forFeature([ProgressModel]),
   ],
-  controllers: [CreateUserController, CreateHabitController],
+  controllers: [
+    CreateUserController,
+    CreateHabitController,
+    CreateProgressController,
+  ],
   providers: [
     RegisterUserCommandHandler,
     CreateHabitCommandHandler,
+    CreateProgressCommandHandler,
     { provide: UserRepository, useClass: UserInMemoryRepository },
     { provide: HabitRepository, useClass: HabitInMemoryRepository },
+    { provide: ProgressRepository, useClass: ProgressInMemoryRepository },
   ],
 })
 export class AppModule {}
