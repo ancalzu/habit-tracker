@@ -8,7 +8,6 @@ import { CreateProgressCommand } from 'src/core/application/progress/create-prog
 export class CreateProgressDto {
   habitId: string
   registryDate: Date
-  notes: string
 }
 
 @Controller()
@@ -21,12 +20,7 @@ export class CreateProgressController {
 
     try {
       this.commandHandler.handle(
-        new CreateProgressCommand(
-          id,
-          request.habitId,
-          request.registryDate,
-          request.notes,
-        ),
+        new CreateProgressCommand(id, request.habitId, request.registryDate),
       )
     } catch (error) {
       catchError(error, response)

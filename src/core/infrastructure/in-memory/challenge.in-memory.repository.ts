@@ -14,7 +14,16 @@ export class ChallengeInMemoryRepository implements ChallengeRepository {
   listAll(): Challenge[] {
     throw new Error('Method not implemented.')
   }
+
   challenges: Challenge[] = []
+
+  listChallengeByHabit(habitId: string): Challenge[] {
+    let challengesList: Challenge[] = []
+    challengesList = this.challenges.filter(
+      (challenge) => challenge.habitId === habitId,
+    )
+    return challengesList
+  }
 
   save(challenge: Challenge): void {
     const challengeModel = new ChallengeModel(

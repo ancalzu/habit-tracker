@@ -11,6 +11,8 @@ export class CreateChallengeDto {
   iterations: string
   startDate: Date
   limitDate: Date
+  status: string
+  currentIterationNumber: number
 }
 
 @Controller()
@@ -30,6 +32,8 @@ export class CreateChallengeController {
           request.iterations,
           request.startDate,
           request.limitDate,
+          request.status,
+          request.currentIterationNumber,
         ),
       )
     } catch (error) {

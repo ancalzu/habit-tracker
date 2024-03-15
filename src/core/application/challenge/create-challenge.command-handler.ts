@@ -17,6 +17,8 @@ export class CreateChallengeCommandHandler {
       command.iterations,
       command.startDate,
       command.limitDate,
+      command.status,
+      command.currentIterations,
     )
     this.challengerepository.save(challenge)
   }
