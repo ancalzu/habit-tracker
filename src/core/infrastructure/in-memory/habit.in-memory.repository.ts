@@ -62,7 +62,7 @@ export class HabitInMemoryRepository implements HabitRepository {
           habit.userId,
           habit.createDate,
           habit.updateDate,
-          habit.wearableDeviceIdHabit,
+          habit.wearableDeviceId,
         ),
       )
     })
@@ -70,7 +70,11 @@ export class HabitInMemoryRepository implements HabitRepository {
     return habitList
   }
 
-  // isHabitSaved(habit: Habit): boolean {
-  //   return this.habits.some((h) => h.id.equals(habit.id))
-  // }
+  findById(id: string): boolean {
+    return this.habits.some((habit) => habit.id === id)
+  }
+
+  isHabitSaved(habit: Habit): boolean {
+    return this.habits.some((h) => h.id === habit.id)
+  }
 }

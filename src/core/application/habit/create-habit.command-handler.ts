@@ -1,4 +1,7 @@
-import { HabitRepository } from '../../domain/habit/habit.repository'
+import {
+  HabitRepository,
+  habitRepository,
+} from '../../domain/habit/habit.repository'
 import { Habit } from '../../domain/habit/habit'
 import { CreateHabitCommand } from './create-habit.command'
 import { DuplicatedHabitNameError } from './duplicated-habit-name.error'
@@ -9,7 +12,7 @@ import { DuplicatedHabitUserError } from './duplicated-habit-user-id.error'
 @Injectable()
 export class CreateHabitCommandHandler {
   constructor(
-    @Inject(HabitRepository) private readonly habitrepository: HabitRepository,
+    @Inject(habitRepository) private readonly habitrepository: HabitRepository,
   ) {}
 
   handle(command: CreateHabitCommand): void {
