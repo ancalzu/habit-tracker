@@ -7,6 +7,7 @@ export interface HabitRepository {
   findUniqueHabitByUser(name: Name, userId: string): Habit | undefined
   listAll(): Habit[]
   listAllbyUser(userId: string): Promise<Habit[]> | void
+  findById(id: string): boolean
 }
 
-export const HabitRepository = Symbol('HabitRepository')
+export const habitRepository = Symbol('HabitRepository')

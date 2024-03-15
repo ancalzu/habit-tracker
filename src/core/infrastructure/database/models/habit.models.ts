@@ -28,7 +28,7 @@ export class HabitModel {
   updateDate: Date
 
   @Column()
-  wearableDeviceIdHabit: string
+  wearableDeviceId: string
 
   constructor(
     id: string,
@@ -49,6 +49,6 @@ export class HabitModel {
     this.userId = userId
     this.createDate = createDate
     this.updateDate = updateDate
-    this.wearableDeviceIdHabit = wearableDeviceIdHabit
+    this.wearableDeviceId = wearableDeviceIdHabit
   }
 }
