@@ -37,6 +37,8 @@ import { UpdateStatusController } from './core/ui/api/update-satus-habit.control
 import { UpdateStatusCommandHandler } from './core/application/habit/update-status-habit.command-handler'
 import { CancelChallengeController } from './core/ui/api/cancel-challenge.controller'
 import { CancelChallengeCommandHandler } from './core/application/challenge/cancel-challenge.command-handler'
+import { ListHabitController } from './core/ui/api/list-habit-by-user.controller'
+import { ListHabitsCommandHandler } from './core/application/habit/list-habits.command-handler'
 
 @Module({
   imports: [
@@ -70,6 +72,7 @@ import { CancelChallengeCommandHandler } from './core/application/challenge/canc
     CreateGoalController,
     UpdateStatusController,
     CancelChallengeController,
+    ListHabitController,
   ],
   providers: [
     RegisterUserCommandHandler,
@@ -82,6 +85,7 @@ import { CancelChallengeCommandHandler } from './core/application/challenge/canc
     UpdateStatusCommandHandler,
     UpdateEventsHandler,
     CancelChallengeCommandHandler,
+    ListHabitsCommandHandler,
     { provide: UserRepository, useClass: UserInMemoryRepository },
     { provide: HabitRepository, useClass: HabitInMemoryRepository },
     { provide: ProgressRepository, useClass: ProgressInMemoryRepository },
