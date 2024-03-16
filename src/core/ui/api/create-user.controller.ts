@@ -8,6 +8,9 @@ import { catchError } from './error.handler'
 export class CreateUserDto {
   username: string
   fullname: string
+  email: string
+  createDate: Date
+  updateDate: Date
 }
 
 @Controller()
@@ -20,7 +23,14 @@ export class CreateUserController {
 
     try {
       this.commandHandler.handle(
-        new RegisterUserCommand(id, request.username, request.fullname),
+        new RegisterUserCommand(
+          id,
+          request.username,
+          request.fullname,
+          request.email,
+          request.createDate,
+          request.updateDate,
+        ),
       )
     } catch (error) {
       catchError(error, response)

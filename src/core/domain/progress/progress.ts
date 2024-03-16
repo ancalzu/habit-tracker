@@ -4,19 +4,13 @@ export class Progress {
     readonly id: string,
     readonly habitId: string,
     readonly registryDate: Date,
-    readonly notes: string,
   ) {}
 
-  static create(
-    habitId: string,
-    registry: Date,
-    notesProgress: string,
-  ): Progress {
+  static create(habitId: string, registry: Date): Progress {
     const id = uuidv4()
-    const ProgressHabitId = habitId
+    const ProgresshabitId = habitId
     const registryDate = registry
-    const notes = notesProgress
 
-    return new Progress(id, ProgressHabitId, registryDate, notes)
+    return new Progress(id, ProgresshabitId, registryDate)
   }
 }

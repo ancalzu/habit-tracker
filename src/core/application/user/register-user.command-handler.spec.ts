@@ -20,6 +20,9 @@ describe('RegisterUserCommandHandler', () => {
       user.id,
       user.username,
       user.fullname,
+      user.email,
+      user.createDate,
+      user.updateDate,
     )
 
     handler.handle(command)
@@ -38,14 +41,29 @@ describe('RegisterUserCommandHandler', () => {
       user.id,
       user.username,
       user.fullname,
+      user.email,
+      user.createDate,
+      user.updateDate,
     )
 
     expect(() => handler.handle(command)).toThrow()
   })
 
   it('should throw an error if the user is not valid', () => {
-    // Given
-    // When
-    // Then
+    const { repository, handler } = prepareScenario()
+
+    const user = UserMother.create()
+    repository.withUsers([user])
+
+    const command = new RegisterUserCommand(
+      user.id,
+      user.username,
+      user.fullname,
+      user.email,
+      user.createDate,
+      user.updateDate,
+    )
+
+    expect(() => handler.handle(command)).toThrow()
   })
 })
