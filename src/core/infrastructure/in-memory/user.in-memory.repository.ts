@@ -13,8 +13,14 @@ export class UserInMemoryRepository implements UserRepository {
   ) {}
 
   saveUser(user: User): void {
-    const userModel = new UserModel(user.id, user.username, user.fullname)
-    this.users.push(userModel)
+    const userModel = new UserModel(
+      user.id,
+      user.username,
+      user.fullname,
+      user.email,
+      user.createDate,
+      user.updateDate,
+    )
     this.postRepository.save(userModel)
   }
 
