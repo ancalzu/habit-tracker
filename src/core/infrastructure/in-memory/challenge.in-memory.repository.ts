@@ -50,6 +50,28 @@ export class ChallengeInMemoryRepository implements ChallengeRepository {
     }
   }
 
+  async getChallenge(challengeId: string): Promise<Challenge> {
+    try {
+      const challengeModel = await this.postRepository.find({
+        where: { id: challengeId },
+      })
+      const challenge: Challenge = {
+        id: challengeModel[0].id,
+        habitId: challengeModel[0].habitId,
+        description: challengeModel[0].description,
+        iterations: challengeModel[0].iterations,
+        startDate: challengeModel[0].startDate,
+        limitDate: challengeModel[0].limitDate,
+        status: challengeModel[0].status,
+        currentIterations: challengeModel[0].iterations,
+      }
+      return challenge
+    } catch (error) {
+      console.error('Error al obtener el reto:', error)
+      throw new Error('Error al obtener el reto')
+    }
+  }
+
   save(challenge: Challenge): void {
     const challengeModel = new ChallengeModel(
       challenge.id,

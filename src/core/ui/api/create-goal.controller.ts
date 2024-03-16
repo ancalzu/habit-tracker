@@ -22,7 +22,6 @@ export class CreateGoalController {
     try {
       this.commandHandler.handle(
         new CreateGoalCommand(
-          id,
           request.challengeId,
           request.userId,
           request.registryDate,

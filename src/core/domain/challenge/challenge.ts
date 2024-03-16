@@ -8,7 +8,7 @@ export class Challenge {
     readonly iterations: number,
     readonly startDate: Date,
     readonly limitDate: Date,
-    readonly status: string,
+    public status: string,
     readonly currentIterations: number,
   ) {}
 
@@ -45,8 +45,14 @@ export class Challenge {
   static completeChallenge(challenge: Challenge) {
     if (challenge.status === 'complete' || challenge.status === 'suspended') {
       return challenge.status
+    }
+  }
+
+  static suspendChallenge(challenge: Challenge) {
+    if (challenge.status === 'complete') {
+      return challenge.status
     } else {
-      return 'complete'
+      return 'suspended'
     }
   }
 }

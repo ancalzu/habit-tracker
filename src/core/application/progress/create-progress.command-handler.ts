@@ -8,6 +8,8 @@ import { Goal } from 'src/core/domain/goal/goal'
 import { ChallengeRepository } from 'src/core/domain/challenge/challenge.repository'
 import { GoalRepository } from 'src/core/domain/goal/goal.repository'
 import { HabitRepository } from 'src/core/domain/habit/habit.repository'
+import { ChallengeCompletedEvent } from '../events/complete-challenge.event'
+import { EventEmitter2 } from 'eventemitter2'
 @Injectable()
 export class CreateProgressCommandHandler {
   constructor(
@@ -19,6 +21,7 @@ export class CreateProgressCommandHandler {
     private readonly GoalRepository: GoalRepository,
     @Inject(HabitRepository)
     private readonly HabitRepository: HabitRepository,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   handle(command: CreateProgressCommand): void {
@@ -44,18 +47,15 @@ export class CreateProgressCommandHandler {
     const registryDate: Date = new Date(command.registryDate)
     if (
       challengeMock.startDate < registryDate &&
-      challengeMock.limitDate > registryDate
+      challengeMock.limitDate > registryDate &&
+      challengeMock.status === 'pending'
     ) {
-      const statusChallenge = Challenge.completeChallenge(challengeMock)
-      if (statusChallenge === 'complete') {
-        const goal = Goal.create(
-          challengeMock.habitId,
-          habitUserId,
-          progress.registryDate,
-        )
-        console.log(goal)
-        this.GoalRepository.save(goal)
-      }
+      const challengeEvent = new ChallengeCompletedEvent(
+        challengeMock.id,
+        habitUserId,
+        command.registryDate,
+      )
+      this.eventEmitter.emit('challenge.completed', challengeEvent)
     }
     //TODO: FIX ASYNC AWAIT PROMISE
     // challengesByHabit2.forEach((challenge) => {

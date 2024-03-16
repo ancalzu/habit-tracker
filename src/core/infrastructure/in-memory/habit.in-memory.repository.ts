@@ -28,6 +28,7 @@ export class HabitInMemoryRepository implements HabitRepository {
       habit.createDate,
       habit.updateDate,
       habit.wearableDeviceId,
+      habit.status,
     )
     this.postRepository.save(habitModel)
   }
@@ -63,6 +64,7 @@ export class HabitInMemoryRepository implements HabitRepository {
           habit.createDate,
           habit.updateDate,
           habit.wearableDeviceId,
+          habit.status,
         ),
       )
     })
@@ -84,6 +86,7 @@ export class HabitInMemoryRepository implements HabitRepository {
           habits[0].createDate,
           habits[0].updateDate,
           habits[0].wearableDeviceId,
+          habits[0].status,
         )
         return habitList
       })
@@ -103,6 +106,7 @@ export class HabitInMemoryRepository implements HabitRepository {
         habitFinded.createDate,
         habitFinded.updateDate,
         habitFinded.wearableDeviceId,
+        habitFinded.status,
       )
     }
     return habit2
@@ -110,5 +114,22 @@ export class HabitInMemoryRepository implements HabitRepository {
 
   isHabitSaved(habit: Habit): boolean {
     return this.habits.some((h) => h.id === habit.id)
+  }
+
+  updateStatus(habit: Habit): void {
+    const habitModel = new HabitModel(
+      habit.id,
+      habit.name.valueName,
+      habit.frequency,
+      habit.duration,
+      habit.restTime,
+      habit.userId,
+      habit.createDate,
+      habit.updateDate,
+      habit.wearableDeviceId,
+      habit.status,
+    )
+    //this.postRepository.updateStatus(habitModel)
+    this.postRepository.save(habitModel)
   }
 }

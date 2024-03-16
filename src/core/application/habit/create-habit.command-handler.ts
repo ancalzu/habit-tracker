@@ -29,6 +29,14 @@ export class CreateHabitCommandHandler {
       wearableDeviceIdHabit = ''
     }
 
+    if (
+      !command.status ||
+      command.status === null ||
+      command.status === undefined
+    ) {
+      wearableDeviceIdHabit = 'Active'
+    }
+
     const habit = Habit.create(
       command.name,
       command.frequency,
@@ -36,6 +44,7 @@ export class CreateHabitCommandHandler {
       command.restTime,
       command.userId,
       wearableDeviceIdHabit,
+      command.status,
     )
     this.habitrepository.save(habit)
   }

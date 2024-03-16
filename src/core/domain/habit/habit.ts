@@ -12,6 +12,7 @@ export class Habit {
     readonly createDate: Date,
     readonly updateDate: Date,
     readonly wearableDeviceId: string,
+    public status: string,
   ) {}
 
   static create(
@@ -21,6 +22,7 @@ export class Habit {
     restTime: number,
     userId: string,
     wearableDeviceId: string,
+    status: string,
   ): Habit {
     const habitId = HabitId.generate()
     const habitName = Name.create(name)
@@ -31,6 +33,7 @@ export class Habit {
     const habitCreateDate = new Date()
     const habitupdateDate = new Date()
     const wearableDeviceIdHabit = wearableDeviceId
+    const statusHabit = status
     return new Habit(
       habitId,
       habitName,
@@ -41,8 +44,7 @@ export class Habit {
       habitCreateDate,
       habitupdateDate,
       wearableDeviceIdHabit,
+      statusHabit,
     )
   }
-
-  //TODO: FROM PRIMITIVES FOR ACCESS
 }
