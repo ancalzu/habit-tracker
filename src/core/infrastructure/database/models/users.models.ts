@@ -12,9 +12,28 @@ export class UserModel {
   @Column()
   fullname: string
 
-  constructor(id: string, username: string, fullname: string) {
+  @Column()
+  email: string
+
+  @Column()
+  createDate: Date
+
+  @Column()
+  updateDate: Date
+
+  constructor(
+    id: string,
+    username: string,
+    fullname: string,
+    email: string,
+    createDate: Date,
+    updateDate: Date,
+  ) {
     this.id = id
     this.username = username
     this.fullname = fullname
+    this.email = email
+    this.createDate = createDate
+    this.updateDate = updateDate
   }
 }
