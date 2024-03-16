@@ -1,8 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common'
-import {
-  HabitRepository,
-  habitRepository,
-} from 'src/core/domain/habit/habit.repository'
+import { HabitRepository } from 'src/core/domain/habit/habit.repository'
 import { Reminder } from 'src/core/domain/reminder/reminder'
 import { AddReminderCommand } from './add-reminder.command'
 import {
@@ -13,7 +10,7 @@ import {
 @Injectable()
 export class AddReminderCommandHandler {
   constructor(
-    @Inject(habitRepository)
+    @Inject(HabitRepository)
     private readonly habitrepository: HabitRepository,
     @Inject(reminderRepository)
     private readonly reminderrepository: ReminderRepository,

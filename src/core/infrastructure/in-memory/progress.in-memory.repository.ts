@@ -17,7 +17,6 @@ export class ProgressInMemoryRepository implements ProgressRepository {
       progress.id,
       progress.habitId,
       progress.registryDate,
-      progress.notes,
     )
     this.progressRepository.save(progressModel)
   }

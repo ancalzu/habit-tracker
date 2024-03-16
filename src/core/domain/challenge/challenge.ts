@@ -5,17 +5,21 @@ export class Challenge {
     readonly id: string,
     readonly habitId: string,
     readonly description: string,
-    readonly iterations: string,
+    readonly iterations: number,
     readonly startDate: Date,
     readonly limitDate: Date,
+    readonly status: string,
+    readonly currentIterations: number,
   ) {}
 
   static create(
     habitId: string,
     description: string,
-    iterations: string,
+    iterations: number,
     startDate: Date,
     limitDate: Date,
+    status: string,
+    currentIterations: number,
   ): Challenge {
     const id = uuidv4()
     const ProgressHabitId = habitId
@@ -23,6 +27,8 @@ export class Challenge {
     const challengeiterations = iterations
     const challengestartDate = startDate
     const challengelimitDate = limitDate
+    const challengeStatus = status
+    const challengecurrentIterations = currentIterations
 
     return new Challenge(
       id,
@@ -31,6 +37,16 @@ export class Challenge {
       challengeiterations,
       challengestartDate,
       challengelimitDate,
+      challengeStatus,
+      challengecurrentIterations,
     )
+  }
+
+  static completeChallenge(challenge: Challenge) {
+    if (challenge.status === 'complete' || challenge.status === 'suspended') {
+      return challenge.status
+    } else {
+      return 'complete'
+    }
   }
 }

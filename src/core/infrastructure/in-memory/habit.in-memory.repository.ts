@@ -70,8 +70,42 @@ export class HabitInMemoryRepository implements HabitRepository {
     return habitList
   }
 
-  findById(id: string): boolean {
-    return this.habits.some((habit) => habit.id === id)
+  async findById(id: string): Promise<Habit | undefined | Habit> {
+    const habits = this.postRepository.findBy({ id: id })
+    const habitFinded = await habits
+      .then((habits) => {
+        const habitList = new Habit(
+          habits[0].id,
+          new Name(habits[0].name),
+          habits[0].frequency,
+          habits[0].duration,
+          habits[0].restTime,
+          habits[0].userId,
+          habits[0].createDate,
+          habits[0].updateDate,
+          habits[0].wearableDeviceId,
+        )
+        return habitList
+      })
+      .catch((error) => {
+        console.error('Ocurrió un error al obtener los hábitos:', error)
+      })
+
+    let habit2: Habit
+    if (habitFinded) {
+      habit2 = new Habit(
+        habitFinded.id,
+        habitFinded.name,
+        habitFinded.frequency,
+        habitFinded.duration,
+        habitFinded.restTime,
+        habitFinded.userId,
+        habitFinded.createDate,
+        habitFinded.updateDate,
+        habitFinded.wearableDeviceId,
+      )
+    }
+    return habit2
   }
 
   isHabitSaved(habit: Habit): boolean {

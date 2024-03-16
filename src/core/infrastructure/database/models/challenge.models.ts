@@ -12,7 +12,7 @@ export class ChallengeModel {
   description: string
 
   @Column()
-  iterations: string
+  iterations: number
 
   @Column()
   startDate: Date
@@ -20,13 +20,17 @@ export class ChallengeModel {
   @Column()
   limitDate: Date
 
+  @Column()
+  status: string
+
   constructor(
     id: string,
     habitId: string,
     description: string,
-    iterations: string,
+    iterations: number,
     startDate: Date,
     limitDate: Date,
+    status: string,
   ) {
     this.id = id
     this.habitId = habitId
@@ -34,5 +38,6 @@ export class ChallengeModel {
     this.iterations = iterations
     this.startDate = startDate
     this.limitDate = limitDate
+    this.status = status
   }
 }

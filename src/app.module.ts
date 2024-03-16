@@ -8,7 +8,7 @@ import { UserModel } from './core/infrastructure/database/models/users.models'
 import { HabitModel } from './core/infrastructure/database/models/habit.models'
 import { CreateHabitController } from './core/ui/api/create-habit.controller'
 import { CreateHabitCommandHandler } from './core/application/habit/create-habit.command-handler'
-import { habitRepository } from './core/domain/habit/habit.repository'
+import { HabitRepository } from './core/domain/habit/habit.repository'
 import { HabitInMemoryRepository } from './core/infrastructure/in-memory/habit.in-memory.repository'
 import { ProgressModel } from './core/infrastructure/database/models/progress.models'
 import { CreateProgressController } from './core/ui/api/create-progress.controller'
@@ -25,6 +25,11 @@ import { AddReminderController } from './core/ui/api/add-reminder.controller'
 import { AddReminderCommandHandler } from './core/application/reminder/add-reminder.command-handler'
 import { ReminderInMemoryRepository } from './core/infrastructure/in-memory/reminder.in-memory.repository'
 import { reminderRepository } from './core/domain/reminder/reminder.repository'
+import { CreateGoalCommandHandler } from './core/application/goal/create-goal.command-handler'
+import { GoalRepository } from './core/domain/goal/goal.repository'
+import { CreateGoalController } from './core/ui/api/create-goal.controller'
+import { GoalModel } from './core/infrastructure/database/models/goal.models'
+import { GoalInMemoryRepository } from './core/infrastructure/in-memory/goal.in-memory.repository'
 
 @Module({
   imports: [
@@ -37,6 +42,7 @@ import { reminderRepository } from './core/domain/reminder/reminder.repository'
         ProgressModel,
         ChallengeModel,
         ReminderModel,
+        GoalModel,
       ],
       synchronize: true,
     }),
@@ -45,6 +51,7 @@ import { reminderRepository } from './core/domain/reminder/reminder.repository'
     TypeOrmModule.forFeature([ProgressModel]),
     TypeOrmModule.forFeature([ChallengeModel]),
     TypeOrmModule.forFeature([ReminderModel]),
+    TypeOrmModule.forFeature([GoalModel]),
   ],
   controllers: [
     CreateUserController,
@@ -52,6 +59,7 @@ import { reminderRepository } from './core/domain/reminder/reminder.repository'
     CreateProgressController,
     CreateChallengeController,
     AddReminderController,
+    CreateGoalController,
   ],
   providers: [
     RegisterUserCommandHandler,
@@ -59,11 +67,13 @@ import { reminderRepository } from './core/domain/reminder/reminder.repository'
     CreateProgressCommandHandler,
     CreateChallengeCommandHandler,
     AddReminderCommandHandler,
+    CreateGoalCommandHandler,
     { provide: UserRepository, useClass: UserInMemoryRepository },
-    { provide: habitRepository, useClass: HabitInMemoryRepository },
+    { provide: HabitRepository, useClass: HabitInMemoryRepository },
     { provide: ProgressRepository, useClass: ProgressInMemoryRepository },
     { provide: ChallengeRepository, useClass: ChallengeInMemoryRepository },
     { provide: reminderRepository, useClass: ReminderInMemoryRepository },
+    { provide: GoalRepository, useClass: GoalInMemoryRepository },
   ],
 })
 export class AppModule {}
