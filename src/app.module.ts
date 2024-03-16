@@ -33,6 +33,8 @@ import { GoalInMemoryRepository } from './core/infrastructure/in-memory/goal.in-
 import { EventEmitterModule } from '@nestjs/event-emitter'
 import { ChallengeEventsHandler } from './core/application/events/complete-challenge.event-handler'
 import { UpdateEventsHandler } from './core/application/events/update-status.event-handler'
+import { UpdateStatusController } from './core/ui/api/update-satus-habit.controller'
+import { UpdateStatusCommandHandler } from './core/application/habit/update-status-habit.command-handler'
 
 @Module({
   imports: [
@@ -64,6 +66,7 @@ import { UpdateEventsHandler } from './core/application/events/update-status.eve
     CreateChallengeController,
     AddReminderController,
     CreateGoalController,
+    UpdateStatusController,
   ],
   providers: [
     RegisterUserCommandHandler,
@@ -73,6 +76,7 @@ import { UpdateEventsHandler } from './core/application/events/update-status.eve
     AddReminderCommandHandler,
     CreateGoalCommandHandler,
     ChallengeEventsHandler,
+    UpdateStatusCommandHandler,
     UpdateEventsHandler,
     { provide: UserRepository, useClass: UserInMemoryRepository },
     { provide: HabitRepository, useClass: HabitInMemoryRepository },

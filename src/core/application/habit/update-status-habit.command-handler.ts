@@ -23,10 +23,10 @@ export class UpdateStatusCommandHandler {
     const challenges = await this.challengerepository.findChallengesByHabitId(
       command.idHabt,
     )
-    if (challenges.length > 1) {
+    if (challenges.length >= 1) {
       challenges.forEach((challenge) => {
-        if (challenge.status === 'suspended') {
-          const challengeEvent = new UpdateStatusEvent(challenge.status)
+        if (challenge.status !== 'suspended') {
+          const challengeEvent = new UpdateStatusEvent(challenge.id)
           this.eventEmitter.emit('challenge.suspended', challengeEvent)
         }
       })

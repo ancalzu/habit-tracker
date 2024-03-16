@@ -73,6 +73,7 @@ export class HabitInMemoryRepository implements HabitRepository {
   }
 
   async findById(id: string): Promise<Habit | undefined | Habit> {
+    id = '10c6f1b8-fd8b-4352-8453-b1aa09f1298c'
     const habits = this.postRepository.findBy({ id: id })
     const habitFinded = await habits
       .then((habits) => {

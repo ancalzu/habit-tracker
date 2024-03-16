@@ -1,30 +1,25 @@
 import { OnEvent } from '@nestjs/event-emitter'
-import { Inject } from '@nestjs/common'
-import { ChallengeRepository } from 'src/core/domain/challenge/challenge.repository'
-import { UpdateStatusChallengeCommand } from '../challenge/update-status-challenge.command'
-import { UpdateStatusChallengeCommandHandler } from '../challenge/update-status-challenge.command-handler'
 import { UpdateStatusEvent } from './update-status.event'
+import { ChallengeRepository } from 'src/core/domain/challenge/challenge.repository'
+import { Inject } from '@nestjs/common'
 
 export class UpdateEventsHandler {
   constructor(
     @Inject(ChallengeRepository)
     private readonly challengerepository: ChallengeRepository,
-    private updatestatuscommandHandler: UpdateStatusChallengeCommandHandler,
   ) {}
   @OnEvent('challenge.suspended')
-  handleChallengeCompletedEvent(event: UpdateStatusEvent) {
+  async handleChallengeCompletedEvent(event: UpdateStatusEvent) {
     console.log(`Challenge suspended: ${event.challengeId}`)
     try {
-      this.updatestatuscommandHandler.handle(
-        new UpdateStatusChallengeCommand(event.challengeId),
+      const challenge = await this.challengerepository.getChallenge(
+        event.challengeId,
       )
-      // const challenge = new CreateChallengeCommand(
-      //   event.,
-      //   event.userId,
-      //   event.dateAchieved,
-      // )
-      //this.challengerepository.save(challenge)
-      console.log('')
+      challenge.status = 'suspended'
+      this.challengerepository.save(challenge)
+      /*TODO: Fix undefined this.updatestatuscommandHandler*/
+      //const statuscommand = new UpdateStatusChallengeCommand(event.challengeId)
+      //this.updatestatuscommandHandler.handle(statuscommand)
     } catch (e) {
       console.error(e)
     }
