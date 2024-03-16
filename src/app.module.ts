@@ -30,6 +30,11 @@ import { GoalRepository } from './core/domain/goal/goal.repository'
 import { CreateGoalController } from './core/ui/api/create-goal.controller'
 import { GoalModel } from './core/infrastructure/database/models/goal.models'
 import { GoalInMemoryRepository } from './core/infrastructure/in-memory/goal.in-memory.repository'
+import { EventEmitterModule } from '@nestjs/event-emitter'
+import { ChallengeEventsHandler } from './core/application/events/complete-challenge.event-handler'
+import { UpdateEventsHandler } from './core/application/events/update-status.event-handler'
+import { UpdateStatusController } from './core/ui/api/update-satus-habit.controller'
+import { UpdateStatusCommandHandler } from './core/application/habit/update-status-habit.command-handler'
 
 @Module({
   imports: [
@@ -52,6 +57,7 @@ import { GoalInMemoryRepository } from './core/infrastructure/in-memory/goal.in-
     TypeOrmModule.forFeature([ChallengeModel]),
     TypeOrmModule.forFeature([ReminderModel]),
     TypeOrmModule.forFeature([GoalModel]),
+    EventEmitterModule.forRoot(),
   ],
   controllers: [
     CreateUserController,
@@ -60,6 +66,7 @@ import { GoalInMemoryRepository } from './core/infrastructure/in-memory/goal.in-
     CreateChallengeController,
     AddReminderController,
     CreateGoalController,
+    UpdateStatusController,
   ],
   providers: [
     RegisterUserCommandHandler,
@@ -68,6 +75,9 @@ import { GoalInMemoryRepository } from './core/infrastructure/in-memory/goal.in-
     CreateChallengeCommandHandler,
     AddReminderCommandHandler,
     CreateGoalCommandHandler,
+    ChallengeEventsHandler,
+    UpdateStatusCommandHandler,
+    UpdateEventsHandler,
     { provide: UserRepository, useClass: UserInMemoryRepository },
     { provide: HabitRepository, useClass: HabitInMemoryRepository },
     { provide: ProgressRepository, useClass: ProgressInMemoryRepository },

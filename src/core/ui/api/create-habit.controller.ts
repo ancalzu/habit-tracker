@@ -4,6 +4,7 @@ import { CreateHabitCommand } from '../../application/habit/create-habit.command
 import { v4 as uuidv4 } from 'uuid'
 import { Response } from 'express'
 import { catchError } from './error.handler'
+import { UpdateStatusCommandHandler } from 'src/core/application/habit/update-status-habit.command-handler'
 
 export class CreateHabitDto {
   name: string
@@ -13,6 +14,12 @@ export class CreateHabitDto {
   restTime: number
   userId: string
   wearableDeviceIdHabit: string
+  status: string
+}
+
+export class UpdateHabitDto {
+  habitId: string
+  status: string
 }
 
 @Controller()
@@ -34,6 +41,7 @@ export class CreateHabitController {
       createDate: createDate,
       updateDate: updateDate,
       wearableDeviceIdHabit: request.wearableDeviceIdHabit,
+      status: request.status,
     }
 
     try {
