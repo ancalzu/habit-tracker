@@ -5,7 +5,7 @@ export class Challenge {
     readonly id: string,
     readonly habitId: string,
     readonly description: string,
-    readonly iterations: string,
+    readonly iterations: number,
     readonly startDate: Date,
     readonly limitDate: Date,
     readonly status: string,
@@ -15,7 +15,7 @@ export class Challenge {
   static create(
     habitId: string,
     description: string,
-    iterations: string,
+    iterations: number,
     startDate: Date,
     limitDate: Date,
     status: string,
@@ -45,6 +45,8 @@ export class Challenge {
   static completeChallenge(challenge: Challenge) {
     if (challenge.status === 'complete' || challenge.status === 'suspended') {
       return challenge.status
+    } else {
+      return 'complete'
     }
   }
 }

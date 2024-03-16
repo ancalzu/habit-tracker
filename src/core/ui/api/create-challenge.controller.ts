@@ -8,7 +8,7 @@ import { CreateChallengeCommand } from 'src/core/application/challenge/create-ch
 export class CreateChallengeDto {
   habitId: string
   description: string
-  iterations: string
+  iterations: number
   startDate: Date
   limitDate: Date
   status: string

@@ -8,7 +8,7 @@ import { UserModel } from './core/infrastructure/database/models/users.models'
 import { HabitModel } from './core/infrastructure/database/models/habit.models'
 import { CreateHabitController } from './core/ui/api/create-habit.controller'
 import { CreateHabitCommandHandler } from './core/application/habit/create-habit.command-handler'
-import { habitRepository } from './core/domain/habit/habit.repository'
+import { HabitRepository } from './core/domain/habit/habit.repository'
 import { HabitInMemoryRepository } from './core/infrastructure/in-memory/habit.in-memory.repository'
 import { ProgressModel } from './core/infrastructure/database/models/progress.models'
 import { CreateProgressController } from './core/ui/api/create-progress.controller'
@@ -27,6 +27,9 @@ import { ReminderInMemoryRepository } from './core/infrastructure/in-memory/remi
 import { reminderRepository } from './core/domain/reminder/reminder.repository'
 import { CreateGoalCommandHandler } from './core/application/goal/create-goal.command-handler'
 import { GoalRepository } from './core/domain/goal/goal.repository'
+import { CreateGoalController } from './core/ui/api/create-goal.controller'
+import { GoalModel } from './core/infrastructure/database/models/goal.models'
+import { GoalInMemoryRepository } from './core/infrastructure/in-memory/goal.in-memory.repository'
 
 @Module({
   imports: [
@@ -66,7 +69,7 @@ import { GoalRepository } from './core/domain/goal/goal.repository'
     AddReminderCommandHandler,
     CreateGoalCommandHandler,
     { provide: UserRepository, useClass: UserInMemoryRepository },
-    { provide: habitRepository, useClass: HabitInMemoryRepository },
+    { provide: HabitRepository, useClass: HabitInMemoryRepository },
     { provide: ProgressRepository, useClass: ProgressInMemoryRepository },
     { provide: ChallengeRepository, useClass: ChallengeInMemoryRepository },
     { provide: reminderRepository, useClass: ReminderInMemoryRepository },

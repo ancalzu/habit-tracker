@@ -2,7 +2,7 @@ export class CreateChallengeCommand {
   id: string
   habitId: string
   description: string
-  iterations: string
+  iterations: number
   startDate: Date
   limitDate: Date
   status: string
@@ -12,7 +12,7 @@ export class CreateChallengeCommand {
     id: string,
     habitId: string,
     description: string,
-    iterations: string,
+    iterations: number,
     startDate: Date,
     limitDate: Date,
     ChallengeStatus: string,

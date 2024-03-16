@@ -17,12 +17,37 @@ export class ChallengeInMemoryRepository implements ChallengeRepository {
 
   challenges: Challenge[] = []
 
-  listChallengeByHabit(habitId: string): Challenge[] {
-    let challengesList: Challenge[] = []
-    challengesList = this.challenges.filter(
-      (challenge) => challenge.habitId === habitId,
-    )
-    return challengesList
+  // listChallengeByHabit(habitId: string): Challenge[] {
+  //   let challengesList: Challenge[] = []
+  //   challengesList = this.challenges.filter(
+  //     (challenge) => challenge.habitId === habitId,
+  //   )
+  //   return challengesList
+  // }
+
+  async findChallengesByHabitId(habitId: string): Promise<Challenge[]> {
+    try {
+      const challengeModels = await this.postRepository.find({
+        where: { habitId: habitId },
+      })
+      const challenges = challengeModels.map((model) => {
+        const challenge: Challenge = {
+          id: model.id,
+          habitId: model.habitId,
+          description: model.description,
+          iterations: model.iterations,
+          startDate: model.startDate,
+          limitDate: model.limitDate,
+          status: model.status,
+          currentIterations: 0,
+        }
+        return challenge
+      })
+      return challenges
+    } catch (error) {
+      console.error('Error al obtener los retos:', error)
+      throw new Error('Error al obtener los retos')
+    }
   }
 
   save(challenge: Challenge): void {
@@ -33,6 +58,7 @@ export class ChallengeInMemoryRepository implements ChallengeRepository {
       challenge.iterations,
       challenge.startDate,
       challenge.limitDate,
+      challenge.status,
     )
     this.postRepository.save(challengeModel)
   }

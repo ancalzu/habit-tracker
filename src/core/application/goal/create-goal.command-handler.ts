@@ -16,6 +16,7 @@ export class CreateGoalCommandHandler {
       command.userId,
       command.completeDate,
     )
+    console.log(goal)
     this.goalrepository.save(goal)
   }
 }

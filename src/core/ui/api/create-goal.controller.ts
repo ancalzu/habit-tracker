@@ -2,9 +2,12 @@ import { Body, Controller, Post, Res } from '@nestjs/common'
 import { v4 as uuidv4 } from 'uuid'
 import { Response } from 'express'
 import { catchError } from './error.handler'
+import { CreateGoalCommandHandler } from 'src/core/application/goal/create-goal.command-handler'
+import { CreateGoalCommand } from 'src/core/application/goal/create-goal.command'
 
 export class CreateGoalDto {
   challengeId: string
+  userId: string
   registryDate: Date
 }
 
@@ -18,7 +21,12 @@ export class CreateGoalController {
 
     try {
       this.commandHandler.handle(
-        new CreateGoalCommand(id, request.challengeId, request.registryDate),
+        new CreateGoalCommand(
+          id,
+          request.challengeId,
+          request.userId,
+          request.registryDate,
+        ),
       )
     } catch (error) {
       catchError(error, response)
