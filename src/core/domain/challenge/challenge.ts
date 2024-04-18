@@ -1,18 +1,41 @@
-import { v4 as uuidv4 } from 'uuid'
+import { AggregateRoot } from '../aggregateRoot'
+import { InvalidChallenge } from './invalidChallenge'
+import { ChallengeId } from './challengeId'
+export type ChallengeState = 'Pending' | 'Completed' | 'Suspended' | 'Canceled'
 
-export class Challenge {
+export class Challenge extends AggregateRoot {
+  readonly id: ChallengeId
+  readonly habitId: string
+  readonly description: string
+  readonly iterations: number
+  readonly startDate: Date
+  readonly limitDate: Date
+  public status: string
+  readonly currentIterations: number
+
   constructor(
-    readonly id: string,
-    readonly habitId: string,
-    readonly description: string,
-    readonly iterations: number,
-    readonly startDate: Date,
-    readonly limitDate: Date,
-    public status: string,
-    readonly currentIterations: number,
-  ) {}
+    id: ChallengeId,
+    habitId: string,
+    description: string,
+    iterations: number,
+    startDate: Date,
+    limitDate: Date,
+    status: string,
+    currentIterations: number,
+  ) {
+    super()
+    this.id = id
+    this.habitId = habitId
+    this.description = description
+    this.iterations = iterations
+    this.startDate = startDate
+    this.limitDate = limitDate
+    this.status = status
+    this.currentIterations = currentIterations
+  }
 
   static create(
+    id: string,
     habitId: string,
     description: string,
     iterations: number,
@@ -21,38 +44,55 @@ export class Challenge {
     status: string,
     currentIterations: number,
   ): Challenge {
-    const id = uuidv4()
-    const ProgressHabitId = habitId
-    const challengeDescription = description
-    const challengeiterations = iterations
-    const challengestartDate = startDate
-    const challengelimitDate = limitDate
-    const challengeStatus = status
-    const challengecurrentIterations = currentIterations
+    const challengeId = ChallengeId.create(id)
 
     return new Challenge(
-      id,
-      ProgressHabitId,
-      challengeDescription,
-      challengeiterations,
-      challengestartDate,
-      challengelimitDate,
-      challengeStatus,
-      challengecurrentIterations,
+      challengeId,
+      habitId,
+      description,
+      iterations,
+      startDate,
+      limitDate,
+      status,
+      currentIterations,
     )
   }
 
-  static completeChallenge(challenge: Challenge) {
+  isPending(): boolean {
+    return this.status === 'Pending'
+  }
+
+  hasReachedTheGoal(progress: number, date: Date) {
+    return (
+      this.iterations <= progress && this.limitDate.getTime() <= date.getTime()
+    )
+  }
+
+  completeChallenge(challenge: Challenge) {
     if (challenge.status === 'complete' || challenge.status === 'suspended') {
-      return challenge.status
+      this.status = 'Canceled'
+      return this
     }
   }
 
-  static suspendChallenge(challenge: Challenge) {
-    if (challenge.status === 'complete') {
-      return challenge.status
-    } else {
-      return 'suspended'
+  suspendChallenge() {
+    this.status = 'Suspended'
+    return this
+  }
+
+  generateGoal(
+    goalId: GoalId,
+    userId: string,
+    progress: number,
+    date: Date,
+  ): void {
+    if (!this.isPending()) {
+      throw InvalidChallenge.create()
+    }
+
+    if (this.hasReachedTheGoal(progress, date)) {
+      const goal = Goal.create(goalId, this.id.value, userId, date)
+      this.recordEvent(GoalWasCreatedEvent.fromAchievement(goal))
     }
   }
 }

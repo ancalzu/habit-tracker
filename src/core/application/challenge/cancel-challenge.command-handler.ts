@@ -11,11 +11,6 @@ export class CancelChallengeCommandHandler {
       throw MissingChallengeError.withId(command.id)
     }
 
-    if (challenge.status === 'pending' || challenge.status === 'suspended') {
-      challenge.status = 'Cancelled'
-      this.challengerepository.save(challenge)
-    } else {
-      throw new Error('Challenge cannot be cancelled')
-    }
+    this.challengerepository.delete(challenge.cancel())
   }
 }

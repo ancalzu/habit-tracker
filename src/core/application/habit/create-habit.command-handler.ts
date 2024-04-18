@@ -3,15 +3,15 @@ import { Habit } from '../../domain/habit/habit'
 import { CreateHabitCommand } from './create-habit.command'
 import { DuplicatedHabitNameError } from './duplicated-habit-name.error'
 import { Name } from '../../domain/habit/name'
-import { Inject, Injectable } from '@nestjs/common'
 import { DuplicatedHabitUserError } from './duplicated-habit-user-id.error'
 import { MissingHabitProperty } from './missing-habit-property.error'
 import { UnfeasibleHabitError } from './Unfeasible-habit.error'
-//import { Id } from '../../domain/habit/habit.id'
-@Injectable()
+import { UserRepository } from 'src/core/domain/user/user.repository'
+
 export class CreateHabitCommandHandler {
   constructor(
-    @Inject(HabitRepository) private readonly habitrepository: HabitRepository,
+    private readonly habitrepository: HabitRepository,
+    private readonly userRepository: UserRepository,
   ) {}
 
   handle(command: CreateHabitCommand): void {
