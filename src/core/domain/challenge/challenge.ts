@@ -1,5 +1,5 @@
 import { AggregateRoot } from '../aggregateRoot'
-import { InvalidChallenge } from './invalidChallenge'
+import { InvalidChallenge } from './invalid-Challenge'
 import { ChallengeId } from './challengeId'
 export type ChallengeState = 'Pending' | 'Completed' | 'Suspended' | 'Canceled'
 

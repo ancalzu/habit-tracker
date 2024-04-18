@@ -1,4 +1,4 @@
-import { InvalidDateError } from './invalidDateError'
+import { InvalidDateError } from './invalid-DateError'
 
 export class ProgressDate {
   constructor(readonly value: Date) {}

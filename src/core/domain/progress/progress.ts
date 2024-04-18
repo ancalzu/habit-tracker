@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { ProgressDate } from './progressDate'
+import { ProgressDate } from './progress-Date'
 import { ProgressId } from './progressId'
 export class Progress {
   constructor(

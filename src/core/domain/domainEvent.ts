@@ -1,16 +1,16 @@
-import { Id } from './id';
-import { EventId } from './eventId';
+import { Id } from './id'
+import { EventId } from './eventId'
 
-type Primitive = string | number | boolean | null | Date | Array<any>;
-type Map = { [key: string]: Primitive };
+type Primitive = string | number | boolean | null | Date | Array<any>
+type Map = { [key: string]: Primitive }
 
 export abstract class DomainEvent<Payload extends Map = Map> {
-  readonly id: Id;
-  readonly aggregateId: Id;
-  readonly type: string;
-  readonly payload: Payload;
-  readonly occurredAt: Date;
-  readonly version: number;
+  readonly id: Id
+  readonly aggregateId: Id
+  readonly type: string
+  readonly payload: Payload
+  readonly occurredAt: Date
+  readonly version: number
 
   protected constructor(
     aggregateId: Id,
@@ -18,11 +18,11 @@ export abstract class DomainEvent<Payload extends Map = Map> {
     payload: Payload,
     version: number = 1,
   ) {
-    this.id = EventId.new();
-    this.aggregateId = aggregateId;
-    this.type = type;
-    this.payload = payload;
-    this.occurredAt = new Date();
-    this.version = version;
+    this.id = EventId.new()
+    this.aggregateId = aggregateId
+    this.type = type
+    this.payload = payload
+    this.occurredAt = new Date()
+    this.version = version
   }
 }
