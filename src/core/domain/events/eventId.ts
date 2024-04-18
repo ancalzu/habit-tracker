@@ -1,4 +1,4 @@
-import { Id } from './id'
+import { Id } from '../id'
 
 export class EventId extends Id {
   static new(): EventId {

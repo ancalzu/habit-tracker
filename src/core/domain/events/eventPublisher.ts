@@ -1,4 +1,4 @@
-import { DomainEvent } from './domainEvent'
+import { DomainEvent } from '../domainEvent'
 
 export interface EventPublisher {
   publish(events: DomainEvent[]): void

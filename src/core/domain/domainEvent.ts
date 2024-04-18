@@ -1,5 +1,5 @@
 import { Id } from './id'
-import { EventId } from './eventId'
+import { EventId } from './events/eventId'
 
 type Primitive = string | number | boolean | null | Date | Array<any>
 type Map = { [key: string]: Primitive }
