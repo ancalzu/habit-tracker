@@ -1,5 +1,7 @@
+import { ChallengeId } from 'src/core/domain/challenge/challengeId'
+
 export class CreateChallengeCommand {
-  id: string
+  id: ChallengeId
   habitId: string
   description: string
   iterations: number
@@ -9,7 +11,7 @@ export class CreateChallengeCommand {
   currentIterations: number
 
   constructor(
-    id: string,
+    id: ChallengeId,
     habitId: string,
     description: string,
     iterations: number,

@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Res } from '@nestjs/common'
-import { v4 as uuidv4 } from 'uuid'
 import { Response } from 'express'
 import { catchError } from './error.handler'
 import { AddReminderCommand } from 'src/core/application/reminder/add-reminder.command'
 import { AddReminderCommandHandler } from 'src/core/application/reminder/add-reminder.command-handler'
+import { ReminderId } from 'src/core/domain/reminder/reminderId'
 
 export class AddReminderDto {
   userId: string
@@ -18,7 +18,7 @@ export class AddReminderController {
 
   @Post('reminder')
   handle(@Body() request: AddReminderDto, @Res() response: Response) {
-    const id = uuidv4()
+    const id = ReminderId.generate()
 
     try {
       this.commandHandler.handle(
