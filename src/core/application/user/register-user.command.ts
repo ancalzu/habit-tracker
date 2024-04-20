@@ -1,6 +1,8 @@
+import { UserId } from 'src/core/domain/user/userId'
+
 export class RegisterUserCommand {
   constructor(
-    readonly id: string,
+    readonly id: UserId,
     readonly username: string,
     readonly email: string,
     readonly fullname: string,
