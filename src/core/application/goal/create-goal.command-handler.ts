@@ -1,17 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common'
 import { CreateGoalCommand } from './create-goal.command'
 import { Goal } from 'src/core/domain/goal/goal'
 import { GoalRepository } from 'src/core/domain/goal/goal.repository'
+import { GoalId } from 'src/core/domain/goal/goalId'
 
-@Injectable()
 export class CreateGoalCommandHandler {
-  constructor(
-    @Inject(GoalRepository)
-    private readonly goalrepository: GoalRepository,
-  ) {}
+  constructor(private readonly goalrepository: GoalRepository) {}
 
   handle(command: CreateGoalCommand): void {
+    const goalId = GoalId.create(command.id)
     const goal = Goal.create(
+      goalId,
       command.challengeId,
       command.userId,
       command.completeDate,

@@ -1,7 +1,9 @@
-export class UpdateStatusEvent {
-  challengeId: string
+import { ChallengeId } from 'src/core/domain/challenge/challengeId'
 
-  constructor(challengeId: string) {
+export class UpdateStatusEvent {
+  challengeId: ChallengeId
+
+  constructor(challengeId: ChallengeId) {
     this.challengeId = challengeId
   }
 }

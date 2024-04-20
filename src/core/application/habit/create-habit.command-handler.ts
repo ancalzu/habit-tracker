@@ -3,19 +3,21 @@ import { Habit } from '../../domain/habit/habit'
 import { CreateHabitCommand } from './create-habit.command'
 import { DuplicatedHabitNameError } from './duplicated-habit-name.error'
 import { Name } from '../../domain/habit/name'
-import { Inject, Injectable } from '@nestjs/common'
 import { DuplicatedHabitUserError } from './duplicated-habit-user-id.error'
 import { MissingHabitProperty } from './missing-habit-property.error'
 import { UnfeasibleHabitError } from './Unfeasible-habit.error'
-//import { Id } from '../../domain/habit/habit.id'
-@Injectable()
+import { UserRepository } from 'src/core/domain/user/user.repository'
+import { HabitId } from 'src/core/domain/habit/habit.id'
+
 export class CreateHabitCommandHandler {
   constructor(
-    @Inject(HabitRepository) private readonly habitrepository: HabitRepository,
+    private readonly habitrepository: HabitRepository,
+    private readonly userRepository: UserRepository,
   ) {}
 
   handle(command: CreateHabitCommand): void {
     const name = Name.create(command.name)
+    const habitId = HabitId.create(command.id)
     const values = Object.values(command)
     for (const value of values) {
       if (value === undefined || value === null || value === '') {
@@ -32,30 +34,17 @@ export class CreateHabitCommandHandler {
       const UnfeasibleValue = command.frequency > 10 ? 'frequency' : 'restTime'
       throw UnfeasibleHabitError.withValue(UnfeasibleValue)
     }
-    let wearableDeviceIdHabit = command.wearableDeviceIdHabit
-    if (
-      !command.wearableDeviceIdHabit ||
-      command.wearableDeviceIdHabit === null ||
-      command.wearableDeviceIdHabit === undefined
-    ) {
-      wearableDeviceIdHabit = ''
-    }
 
-    if (
-      !command.status ||
-      command.status === null ||
-      command.status === undefined
-    ) {
-      wearableDeviceIdHabit = 'Active'
-    }
+    const wearableDeviceId = undefined
 
     const habit = Habit.create(
+      habitId,
       command.name,
       command.frequency,
       command.duration,
       command.restTime,
       command.userId,
-      wearableDeviceIdHabit,
+      wearableDeviceId,
       command.status,
     )
     this.habitrepository.save(habit)

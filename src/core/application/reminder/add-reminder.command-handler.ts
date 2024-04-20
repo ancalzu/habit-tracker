@@ -1,18 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common'
 import { HabitRepository } from 'src/core/domain/habit/habit.repository'
 import { Reminder } from 'src/core/domain/reminder/reminder'
 import { AddReminderCommand } from './add-reminder.command'
-import {
-  ReminderRepository,
-  reminderRepository,
-} from 'src/core/domain/reminder/reminder.repository'
+import { ReminderRepository } from 'src/core/domain/reminder/reminder.repository'
+import { ReminderId } from 'src/core/domain/reminder/reminderId'
 
-@Injectable()
 export class AddReminderCommandHandler {
   constructor(
-    @Inject(HabitRepository)
     private readonly habitrepository: HabitRepository,
-    @Inject(reminderRepository)
     private readonly reminderrepository: ReminderRepository,
   ) {}
 
@@ -43,7 +37,10 @@ export class AddReminderCommandHandler {
       //TODO: throw new BadRequestException('Ya has alcanzado el número máximo de recordatorios permitidos para este hábito.',)
     }
 
+    const reminderId = ReminderId.create(command.reminderId)
+
     const reminder = Reminder.create(
+      reminderId,
       command.userId,
       command.habitId,
       command.message,

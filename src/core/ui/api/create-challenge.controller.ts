@@ -1,11 +1,12 @@
 import { Body, Controller, Post, Res } from '@nestjs/common'
-import { v4 as uuidv4 } from 'uuid'
 import { Response } from 'express'
 import { catchError } from './error.handler'
 import { CreateChallengeCommandHandler } from 'src/core/application/challenge/create-challenge.command-handler'
 import { CreateChallengeCommand } from 'src/core/application/challenge/create-challenge.command'
+import { ChallengeId } from 'src/core/domain/challenge/challengeId'
 
 export class CreateChallengeDto {
+  id: string
   habitId: string
   description: string
   iterations: number
@@ -21,7 +22,7 @@ export class CreateChallengeController {
 
   @Post('challenge')
   handle(@Body() request: CreateChallengeDto, @Res() response: Response) {
-    const id = uuidv4()
+    const id = ChallengeId.create(request.id)
 
     try {
       this.commandHandler.handle(
@@ -40,6 +41,6 @@ export class CreateChallengeController {
       catchError(error, response)
       return
     }
-    response.set('Location', `/challenge/${id}`).send()
+    response.set('Location', `/challenge/${request.id}`).send()
   }
 }

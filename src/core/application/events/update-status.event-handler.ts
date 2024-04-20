@@ -17,9 +17,6 @@ export class UpdateEventsHandler {
       )
       challenge.status = 'suspended'
       this.challengerepository.save(challenge)
-      /*TODO: Fix undefined this.updatestatuscommandHandler*/
-      //const statuscommand = new UpdateStatusChallengeCommand(event.challengeId)
-      //this.updatestatuscommandHandler.handle(statuscommand)
     } catch (e) {
       console.error(e)
     }

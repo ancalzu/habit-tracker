@@ -1,15 +1,17 @@
 import { v4 as uuidv4 } from 'uuid'
+import { ProgressDate } from './progress-Date'
+import { ProgressId } from './progressId'
 export class Progress {
   constructor(
-    readonly id: string,
+    readonly id: ProgressId,
     readonly habitId: string,
-    readonly registryDate: Date,
+    readonly registryDate: ProgressDate,
   ) {}
 
   static create(habitId: string, registry: Date): Progress {
     const id = uuidv4()
     const ProgresshabitId = habitId
-    const registryDate = registry
+    const registryDate = ProgressDate.create(registry)
 
     return new Progress(id, ProgresshabitId, registryDate)
   }

@@ -5,6 +5,7 @@ import { HabitModel } from '../database/models/habit.models'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { HabitId } from 'src/core/domain/habit/habit.id'
 @Injectable()
 export class HabitInMemoryRepository implements HabitRepository {
   constructor(
@@ -19,7 +20,7 @@ export class HabitInMemoryRepository implements HabitRepository {
 
   save(habit: Habit): void {
     const habitModel = new HabitModel(
-      habit.id,
+      habitId,
       habit.name.valueName,
       habit.frequency,
       habit.duration,

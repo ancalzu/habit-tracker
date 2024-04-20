@@ -1,12 +1,12 @@
 import { CreateHabitCommandHandler } from '../../application/habit/create-habit.command-handler'
 import { Body, Controller, Post, Res } from '@nestjs/common'
 import { CreateHabitCommand } from '../../application/habit/create-habit.command'
-import { v4 as uuidv4 } from 'uuid'
 import { Response } from 'express'
 import { catchError } from './error.handler'
-import { UpdateStatusCommandHandler } from 'src/core/application/habit/update-status-habit.command-handler'
+import { UserId } from 'src/core/domain/user/userId'
 
 export class CreateHabitDto {
+  id: string
   name: string
   description: string
   frequency: number
@@ -28,7 +28,7 @@ export class CreateHabitController {
 
   @Post('habit')
   handle(@Body() request: CreateHabitDto, @Res() response: Response) {
-    const id = uuidv4()
+    const id = UserId.create(request.id)
     const createDate = new Date()
     const updateDate = new Date()
     const params = {
@@ -51,6 +51,6 @@ export class CreateHabitController {
       return
     }
 
-    response.set('Location', `/habit/${id}`).send()
+    response.set('Location', `/habit/${request.id}`).send()
   }
 }

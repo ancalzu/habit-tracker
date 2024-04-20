@@ -1,16 +1,12 @@
 import { HabitRepository } from '../../domain/habit/habit.repository'
-import { Inject, Injectable } from '@nestjs/common'
 import { UpdateStatusHabitCommand } from './update-status-habit.command'
 import { EventEmitter2 } from '@nestjs/event-emitter'
 import { ChallengeRepository } from 'src/core/domain/challenge/challenge.repository'
 import { UpdateStatusEvent } from '../events/update-status.event'
 
-@Injectable()
 export class UpdateStatusCommandHandler {
   constructor(
-    @Inject(HabitRepository)
     private readonly habitrepository: HabitRepository,
-    @Inject(ChallengeRepository)
     private readonly challengerepository: ChallengeRepository,
     private eventEmitter: EventEmitter2,
   ) {}

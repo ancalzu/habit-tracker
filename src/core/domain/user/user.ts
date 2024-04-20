@@ -1,7 +1,7 @@
-import { v4 as uuidv4 } from 'uuid'
+import { UserId } from './userId'
 export class User {
   constructor(
-    readonly id: string,
+    readonly id: UserId,
     readonly username: string,
     readonly fullname: string,
     readonly email: string,
@@ -9,14 +9,14 @@ export class User {
     readonly updateDate: Date,
   ) {}
 
-  static create(username: string, fullname: string, email: string): User {
-    const Userid = uuidv4()
-    const Username = username
-    const Fullname = fullname
-    const Email = email
+  static create(
+    id: UserId,
+    username: string,
+    fullname: string,
+    email: string,
+  ): User {
     const createDate = new Date()
     const updateDate = new Date()
-
-    return new User(Userid, Username, Fullname, Email, createDate, updateDate)
+    return new User(id, username, fullname, email, createDate, updateDate)
   }
 }
