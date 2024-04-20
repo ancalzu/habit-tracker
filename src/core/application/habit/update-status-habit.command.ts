@@ -1,8 +1,8 @@
 export class UpdateStatusHabitCommand {
   idHabt: string
-  status: string
+  status: boolean
 
-  constructor(idHabit: string, status: string) {
+  constructor(idHabit: string, status: boolean) {
     this.idHabt = idHabit
     this.status = status
   }

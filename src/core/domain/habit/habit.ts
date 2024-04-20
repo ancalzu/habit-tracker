@@ -1,14 +1,13 @@
 import { AggregateRoot } from '../aggregateRoot'
 import { HabitId } from './habit.id'
 import { Name } from './name'
-import { Reminder, ReminderState } from './reminder'
-import { ProgressRecord } from './progressRecord'
-import { ProgressRecordId } from './progressRecordId'
-import { WearableService } from '../services/WearableService'
-import { ProgressRecordWasCreatedEvent } from './progressRecordWasCreatedEvent'
-import { ReminderId } from './reminderId'
-import { InvalidRemainderError } from './invalidRemaindersNumberError'
-import { ReminderWasCreatedEvent } from './reminderWasCreatedEvent'
+import { Reminder } from '../reminder/reminder'
+import { Progress } from '../progress/progress'
+import { WearableService } from '../service/WearableService'
+import { ProgressWasCreatedEvent } from '../progress/progressWasCreatedEvent'
+import { ReminderId } from '../reminder/reminderId'
+import { ReminderWasCreatedEvent } from '../reminder/reminderWasCreatedEvent'
+import { ReminderState } from '../../application/constants/reminder-constant'
 export class Habit extends AggregateRoot {
   readonly id: HabitId
   readonly name: Name
@@ -20,7 +19,7 @@ export class Habit extends AggregateRoot {
   readonly updateDate: Date
   readonly wearableDeviceId: string
   public status: boolean
-  private progressRecord: ProgressRecord[] = []
+  private progress: Progress[] = []
   private reminders: Reminder[] = []
 
   public constructor(
@@ -33,7 +32,7 @@ export class Habit extends AggregateRoot {
     createDate: Date,
     updateDate: Date,
     wearableDeviceId: string,
-    status: string,
+    status: boolean,
   ) {
     super()
     this.id = id
@@ -49,16 +48,15 @@ export class Habit extends AggregateRoot {
   }
 
   static create(
-    id: string,
+    id: HabitId,
     name: string,
     frequency: number,
     duration: number,
     restTime: number,
     userId: string,
     wearableDeviceId: string,
-    status: string,
+    status: boolean,
   ): Habit {
-    const habitId = HabitId.create(id)
     const habitName = Name.create(name)
     const frequencyHabit = frequency
     const durationHabit = duration
@@ -69,7 +67,7 @@ export class Habit extends AggregateRoot {
     const wearableDeviceIdHabit = wearableDeviceId
     const statusHabit = status
     return new Habit(
-      habitId,
+      id,
       habitName,
       frequencyHabit,
       durationHabit,
@@ -86,58 +84,25 @@ export class Habit extends AggregateRoot {
     return wearableService.execute(this.wearableDeviceId)
   }
 
-  private isReminderDuplicated(time: Date): boolean {
-    return this.reminders.some(
-      (reminder) =>
-        reminder.timestamp.getDate() === time.getDate() &&
-        reminder.timestamp.getMonth() === time.getMonth() &&
-        reminder.timestamp.getFullYear() === time.getFullYear() &&
-        reminder.timestamp.getHours() === time.getHours() &&
-        reminder.timestamp.getSeconds() === time.getSeconds(),
-    )
-  }
-
   isActive(): boolean {
     return !this.status
   }
 
-  public addProgressRecord(
-    id: ProgressRecordId,
-    habitId: string,
-    date: Date,
-    wearableService: WearableService,
-    observation: string,
-  ): void {
-    const progressRecord = ProgressRecord.create(
-      id,
-      habitId,
-      date,
-      this.isWearableDeviceValidated(wearableService),
-      observation,
-    )
-    this.progressRecord.push(progressRecord)
+  public addProgress(habitId: string, date: Date): void {
+    const progress = Progress.create(habitId, date)
+    this.progress.push(progress)
 
-    this.recordEvent(
-      ProgressRecordWasCreatedEvent.fromProgressRecord(progressRecord),
-    )
+    this.recordEvent(ProgressWasCreatedEvent.fromProgress(progress))
   }
 
   public addReminder(
     id: ReminderId,
     habitId: string,
     message: string,
-    state: ReminderState,
-    timestamp: Date,
+    state: typeof ReminderState,
+    date: Date,
   ): void {
-    if (this.reminders.length > 3) {
-      throw InvalidRemainderError.create()
-    }
-
-    if (this.isReminderDuplicated(timestamp)) {
-      throw InvalidRemainderError.withTime(timestamp)
-    }
-
-    const reminder = Reminder.create(id, habitId, message, state, timestamp)
+    const reminder = Reminder.create(id, habitId, message, state, date)
     this.reminders.push(reminder)
 
     this.recordEvent(ReminderWasCreatedEvent.fromReminder(reminder))

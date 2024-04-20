@@ -3,6 +3,7 @@ import { ChallengeRepository } from 'src/core/domain/challenge/challenge.reposit
 import { Challenge } from 'src/core/domain/challenge/challenge'
 import { HabitRepository } from 'src/core/domain/habit/habit.repository'
 import { HabitNotFoundError } from '../habit/habitNotFoundError'
+import { HabitId } from 'src/core/domain/habit/habit.id'
 
 export class CreateChallengeCommandHandler {
   constructor(
@@ -18,6 +19,7 @@ export class CreateChallengeCommandHandler {
     }
 
     const challenge = Challenge.create(
+      command.id.value,
       habitId.value,
       command.description,
       command.iterations,

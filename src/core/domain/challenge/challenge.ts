@@ -1,6 +1,9 @@
 import { AggregateRoot } from '../aggregateRoot'
 import { InvalidChallenge } from './invalid-Challenge'
 import { ChallengeId } from './challengeId'
+import { GoalId } from '../goal/goalId'
+import { GoalWasCreatedEvent } from '../goal/goalWasCreatedEvent'
+import { Goal } from '../goal/Goal'
 export type ChallengeState = 'Pending' | 'Completed' | 'Suspended' | 'Canceled'
 
 export class Challenge extends AggregateRoot {
@@ -85,14 +88,16 @@ export class Challenge extends AggregateRoot {
     userId: string,
     progress: number,
     date: Date,
+    challengeId: ChallengeId,
   ): void {
     if (!this.isPending()) {
       throw InvalidChallenge.create()
     }
 
     if (this.hasReachedTheGoal(progress, date)) {
+      console.log(`Challenge Completed: ${challengeId}`)
       const goal = Goal.create(goalId, this.id.value, userId, date)
-      this.recordEvent(GoalWasCreatedEvent.fromAchievement(goal))
+      this.recordEvent(GoalWasCreatedEvent.fromGoal(goal))
     }
   }
 }

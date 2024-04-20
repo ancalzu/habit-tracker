@@ -5,7 +5,7 @@ export class Reminder {
     readonly habitId: string,
     readonly state: string,
     readonly message: string,
-    readonly time: string,
+    readonly time: Date,
   ) {}
 
   static create(
@@ -13,7 +13,7 @@ export class Reminder {
     state: string,
     habit: string,
     message: string,
-    time: string,
+    time: Date,
   ): Reminder {
     return new Reminder(id, habit, state, message, time)
   }

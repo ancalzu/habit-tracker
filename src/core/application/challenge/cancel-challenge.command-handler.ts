@@ -11,6 +11,6 @@ export class CancelChallengeCommandHandler {
       throw MissingChallengeError.withId(command.id)
     }
 
-    this.challengerepository.delete(challenge.cancel())
+    this.challengerepository.delete(challenge.completeChallenge(challenge))
   }
 }

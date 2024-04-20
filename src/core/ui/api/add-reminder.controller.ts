@@ -21,8 +21,10 @@ export class AddReminderController {
     const id = ReminderId.generate()
 
     try {
+      const reminderId = ReminderId.create(id)
       this.commandHandler.handle(
         new AddReminderCommand(
+          reminderId,
           request.userId,
           request.habitId,
           request.message,

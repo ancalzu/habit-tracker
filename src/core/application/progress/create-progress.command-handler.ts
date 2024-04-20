@@ -28,10 +28,6 @@ export class CreateProgressCommandHandler {
     const progress = Progress.create(command.habitId, command.registryDate)
     this.progressrepository.save(progress)
 
-    const challengesByHabit = this.ChallengeRepository.findChallengesByHabitId(
-      command.habitId,
-    )
-
     /*As long as I solve the problem with Async await we will use dummy values*/
     const habitUserId = 'a664dcf8-2c8b-41b4-98af-0cf6f0378981'
     const challengeMock = {
@@ -50,27 +46,14 @@ export class CreateProgressCommandHandler {
       challengeMock.limitDate > registryDate &&
       challengeMock.status === 'pending'
     ) {
+      const challengeCompleted = 100
       const challengeEvent = new ChallengeCompletedEvent(
-        challengeMock.id,
+        challengeCompleted,
         habitUserId,
         command.registryDate,
+        challengeMock.id,
       )
       this.eventEmitter.emit('challenge.completed', challengeEvent)
     }
-    //TODO: FIX ASYNC AWAIT PROMISE
-    // challengesByHabit2.forEach((challenge) => {
-    //   challengeMock.startDate < command.registryDate &&
-    //     challengeMock.limitDate > command.registryDate
-    //   const statusChallenge = Challenge.completeChallenge(challenge)
-    //   console.log(statusChallenge)
-    //   if (statusChallenge === 'complete') {
-    //     const goal = Goal.create(
-    //       challenge.habitId,
-    //       habitUserId,
-    //       progress.registryDate,
-    //     )
-    //     this.GoalRepository.save(goal)
-    //   }
-    // })
   }
 }

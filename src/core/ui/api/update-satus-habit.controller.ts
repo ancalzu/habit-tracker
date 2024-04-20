@@ -17,7 +17,7 @@ export class CreateHabitDto {
 
 export class UpdateHabitDto {
   habitId: string
-  status: string
+  status: boolean
 }
 
 @Controller()
