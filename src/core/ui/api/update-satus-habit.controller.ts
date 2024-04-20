@@ -1,4 +1,3 @@
-import { CreateHabitCommandHandler } from '../../application/habit/create-habit.command-handler'
 import { Body, Controller, Put, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { catchError } from './error.handler'
