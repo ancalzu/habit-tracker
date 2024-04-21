@@ -1,4 +1,4 @@
-import { UserId } from './userId'
+import { UserId } from './user.Id'
 export class User {
   constructor(
     readonly id: UserId,

@@ -1,13 +1,14 @@
-import { v4 as uuidv4 } from 'uuid'
+import { GoalId } from 'src/core/domain/goal/goalId'
 
 export class CreateGoalCommand {
-  id: string
+  id: GoalId
   challengeId: string
   userId: string
   completeDate: Date
 
   constructor(challengeId: string, userId: string, completeDate: Date) {
-    this.id = uuidv4()
+    const goalId = GoalId.generateId()
+    this.id = goalId
     this.challengeId = challengeId
     this.userId = userId
     this.completeDate = completeDate

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import { Challenge } from 'src/core/domain/challenge/challenge'
 import { ChallengeModel } from '../database/models/challenge.models'
 import { ChallengeRepository } from 'src/core/domain/challenge/challenge.repository'
+import { ChallengeId } from 'src/core/domain/challenge/challengeId'
 @Injectable()
 export class ChallengeInMemoryRepository implements ChallengeRepository {
   constructor(
@@ -31,8 +32,9 @@ export class ChallengeInMemoryRepository implements ChallengeRepository {
         where: { habitId: habitId },
       })
       const challenges = challengeModels.map((model) => {
+        const challengeId = ChallengeId.create(model.id)
         const challenge: Challenge = {
-          id: model.id,
+          id: challengeId,
           habitId: model.habitId,
           description: model.description,
           iterations: model.iterations,
@@ -55,8 +57,9 @@ export class ChallengeInMemoryRepository implements ChallengeRepository {
       const challengeModel = await this.postRepository.find({
         where: { id: challengeId },
       })
+      const challengeid = ChallengeId.create(challengeId)
       const challenge: Challenge = {
-        id: challengeModel[0].id,
+        id: challengeid,
         habitId: challengeModel[0].habitId,
         description: challengeModel[0].description,
         iterations: challengeModel[0].iterations,
@@ -74,7 +77,7 @@ export class ChallengeInMemoryRepository implements ChallengeRepository {
 
   save(challenge: Challenge): void {
     const challengeModel = new ChallengeModel(
-      challenge.id,
+      challenge.id.value,
       challenge.habitId,
       challenge.description,
       challenge.iterations,

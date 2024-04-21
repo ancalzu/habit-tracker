@@ -3,7 +3,7 @@ import { Body, Controller, Post, Res } from '@nestjs/common'
 import { RegisterUserCommand } from '../../application/user/register-user.command'
 import { Response } from 'express'
 import { catchError } from './error.handler'
-import { UserId } from 'src/core/domain/user/userId'
+import { UserId } from 'src/core/domain/user/user.Id'
 
 export class CreateUserDto {
   id: string

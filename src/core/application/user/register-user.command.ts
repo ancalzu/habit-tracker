@@ -1,4 +1,4 @@
-import { UserId } from 'src/core/domain/user/userId'
+import { UserId } from 'src/core/domain/user/user.Id'
 
 export class RegisterUserCommand {
   constructor(

@@ -1,10 +1,11 @@
 // src/infrastructure/database/models/user.model.ts
+import { UserId } from 'src/core/domain/user/user.Id'
 import { Entity, PrimaryColumn, Column } from 'typeorm'
 
 @Entity('user')
 export class UserModel {
   @PrimaryColumn('uuid')
-  id: string
+  id: UserId
 
   @Column()
   username: string
@@ -22,7 +23,7 @@ export class UserModel {
   updateDate: Date
 
   constructor(
-    id: string,
+    id: UserId,
     username: string,
     fullname: string,
     email: string,
