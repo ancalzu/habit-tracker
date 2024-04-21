@@ -1,8 +1,8 @@
 import { Body, Controller, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
-import { AddUsersToChallengeCommand } from '../../application/challenge/addUsersToChallengeCommand'
-import { catchError } from '../../../core/ui/api/errorHandler'
-import { AddUsersToChallengeCommandHandler } from '../../application/challenge/addUsersToChallengeCommandHandler'
+import { AddUsersToChallengeCommand } from '../../application/challenge/adduserToChallengeCommand'
+import { catchError } from '../../../core/ui/api/error.handler'
+import { AddUsersToChallengeCommandHandler } from '../../application/challenge/adduserToChallengeCommandHandler'
 
 interface AddUsersToChallengeDto {
   challengeId: string

@@ -1,5 +1,5 @@
-import { DomainEvent } from '../../../core/domain/domainEvent'
-import { ChallengeId } from '../../../core/domain/challenge/challengeId'
+import { DomainEvent } from '../../../../core/domain/domainEvent'
+import { ChallengeId } from '../../../../core/domain/challenge/challengeId'
 
 export type UsersAddedPayload = {
   readonly users: string[]
