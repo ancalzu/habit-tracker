@@ -5,7 +5,6 @@ import { HabitModel } from '../database/models/habit.models'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { HabitId } from 'src/core/domain/habit/habit.id'
 @Injectable()
 export class HabitInMemoryRepository implements HabitRepository {
   constructor(
@@ -20,7 +19,7 @@ export class HabitInMemoryRepository implements HabitRepository {
 
   save(habit: Habit): void {
     const habitModel = new HabitModel(
-      habitId,
+      habit.id,
       habit.name.valueName,
       habit.frequency,
       habit.duration,
@@ -75,7 +74,7 @@ export class HabitInMemoryRepository implements HabitRepository {
 
   async findById(id: string): Promise<Habit | undefined | Habit> {
     id = '10c6f1b8-fd8b-4352-8453-b1aa09f1298c'
-    const habits = this.postRepository.findBy({ id: id })
+    const habits = this.postRepository.findBy({ userId: id })
     const habitFinded = await habits
       .then((habits) => {
         const habitList = new Habit(

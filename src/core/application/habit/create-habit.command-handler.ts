@@ -6,14 +6,10 @@ import { Name } from '../../domain/habit/name'
 import { DuplicatedHabitUserError } from './duplicated-habit-user-id.error'
 import { MissingHabitProperty } from './missing-habit-property.error'
 import { UnfeasibleHabitError } from './Unfeasible-habit.error'
-import { UserRepository } from 'src/core/domain/user/user.repository'
 import { HabitId } from 'src/core/domain/habit/habit.id'
 
 export class CreateHabitCommandHandler {
-  constructor(
-    private readonly habitrepository: HabitRepository,
-    private readonly userRepository: UserRepository,
-  ) {}
+  constructor(private readonly habitrepository: HabitRepository) {}
 
   handle(command: CreateHabitCommand): void {
     const name = Name.create(command.name)

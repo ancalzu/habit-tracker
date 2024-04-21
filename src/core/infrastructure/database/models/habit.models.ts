@@ -1,10 +1,11 @@
 // src/infrastructure/database/models/user.model.ts
+import { HabitId } from 'src/core/domain/habit/habit.id'
 import { Entity, PrimaryColumn, Column } from 'typeorm'
 
 @Entity('habit')
 export class HabitModel {
   @PrimaryColumn('uuid')
-  id: string
+  id: HabitId
 
   @Column()
   name: string
@@ -31,10 +32,10 @@ export class HabitModel {
   wearableDeviceId: string
 
   @Column()
-  status: string
+  status: boolean
 
   constructor(
-    id: string,
+    id: HabitId,
     name: string,
     frecuency: number,
     duration: number,
@@ -43,7 +44,7 @@ export class HabitModel {
     createDate: Date,
     updateDate: Date,
     wearableDeviceIdHabit: string,
-    status: string,
+    status: boolean,
   ) {
     this.id = id
     this.name = name
