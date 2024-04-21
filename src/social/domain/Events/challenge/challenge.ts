@@ -1,10 +1,12 @@
-import { EventSourcedEntity } from '../Events/EventSourcedEntity'
-import { DomainEvent } from '../../../core/domain/domainEvent'
+import { EventSourcedEntity } from '../eventSourcedEntity'
 import { ChallengeState } from './challengeState'
-import { ChallengeStartedEvent } from '../Events/challenge/challengeStartedEvent'
-import { HabitId } from '../../../core/domain/habit/habit.Id'
-import { ChallengeId } from '../../../core/domain/challenge/challengeId'
-import { UsersAddedEvent } from '../Events/challenge/usersAddedEvent'
+import { ChallengeStartedEvent } from './challengeStartedEvent'
+import { UsersAddedEvent } from './usersAddedEvent'
+import { ProgressLoggedEvent } from './progressLoggedEvent'
+import { ChallengeCompletedEvent } from './challengeCompletedEvent'
+import { ChallengeId } from './challenge.Id'
+import { DomainEvent } from '../domainEvent'
+import { HabitId } from 'src/core/domain/habit/habit.id'
 
 export class Challenge extends EventSourcedEntity {
   private challengeState: ChallengeState
@@ -24,6 +26,12 @@ export class Challenge extends EventSourcedEntity {
       case UsersAddedEvent.Type:
         this.whenUsersAdded(e as unknown as UsersAddedEvent)
         break
+      case ProgressLoggedEvent.Type:
+        this.whenProgressLogged(e as unknown as ProgressLoggedEvent)
+        break
+      case ChallengeCompletedEvent.Type:
+        this.whenChallengeCompleted(e as unknown as ChallengeCompletedEvent)
+        break
       default:
         throw new Error('Unknown event type')
     }
@@ -35,6 +43,18 @@ export class Challenge extends EventSourcedEntity {
 
   private whenUsersAdded(event: UsersAddedEvent) {
     this.challengeState = this.challengeState.withUsersAdded(event)
+  }
+
+  private whenProgressLogged(event: ProgressLoggedEvent) {
+    this.challengeState = this.challengeState.withProgressLogged(event)
+  }
+
+  private whenChallengeCompleted(event: ChallengeCompletedEvent) {
+    this.challengeState = this.challengeState.withChallengeCompleted(event)
+  }
+
+  private hasReachedTheGoal(): boolean {
+    return this.challengeState.hasReachedTheTarget()
   }
 
   static createStarted(
@@ -90,6 +110,21 @@ export class Challenge extends EventSourcedEntity {
   static usersAdded(stream: DomainEvent, users: string[]): Challenge {
     const challenge = new Challenge([stream])
     this.apply(UsersAddedEvent.with(stream.id, users))
+    return challenge
+  }
+
+  static addProgress(
+    stream: DomainEvent,
+    userId: string,
+    progress: number,
+  ): Challenge {
+    const challenge = new Challenge([stream])
+    this.apply(ProgressLoggedEvent.with(stream.id, userId, progress))
+
+    if (challenge.hasReachedTheGoal()) {
+      this.apply(ChallengeCompletedEvent.with(stream.id, userId))
+    }
+
     return challenge
   }
 }

@@ -1,5 +1,5 @@
-import { DomainEvent } from '../../domain/domainEvent'
-import { EventPublisher } from '../../domain/eventPublisher'
+import { DomainEvent } from '../../domain/Events/domainEvent'
+import { EventPublisher } from '../../domain/Events/eventPublisher'
 import { ChallengeId } from '../../../core/domain/challenge/challengeId'
 
 export class InMemoryEventPublisher implements EventPublisher {
@@ -14,6 +14,13 @@ export class InMemoryEventPublisher implements EventPublisher {
   findChallengeStartedById(id: ChallengeId): DomainEvent {
     return this.publishedEvents.find(
       (event) => event.id.equals(id) && event.type === 'ChallengeStarted',
+    )
+  }
+
+  findChallengesStartedByHabitId(habitId: string): DomainEvent[] {
+    return this.publishedEvents.filter(
+      (event) =>
+        event.payload.habitId === habitId && event.type === 'ChallengeStarted',
     )
   }
 }

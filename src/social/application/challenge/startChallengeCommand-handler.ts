@@ -1,9 +1,9 @@
 import { StartChallengeCommand } from './startChallengeCommand'
-import { HabitRepository } from '../../../core/domain/habit/habitRepository'
-import { EventPublisher } from '../../domain/eventPublisher'
-import { HabitNotFoundError } from '../../../core/application/habitNotFoundError'
+import { HabitRepository } from '../../../core/domain/habit/habit.repository'
+import { EventPublisher } from '../../domain/events/eventPublisher'
+import { HabitNotFoundError } from '../../../core/application/habit/habitNotFoundError'
 import { Challenge } from '../../domain/challenge/challenge'
-import { HabitId } from '../../../core/domain/habit/habitId'
+import { HabitId } from '../../../core/domain/habit/habit.id'
 
 export class StartChallengeCommandHandler {
   constructor(

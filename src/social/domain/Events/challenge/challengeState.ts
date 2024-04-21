@@ -1,13 +1,14 @@
-import { ChallengeId } from '../../../core/domain/challenge/challengeId'
-import { HabitId } from '../../../core/domain/habit/habit.Id'
 import { ChallengeStatus } from './challengeStatus'
-import { ChallengeStartedEvent } from '../Events/challenge/challengeStartedEvent'
-import { UsersAddedEvent } from '../Events/challenge/usersAddedEvent'
+import { ChallengeStartedEvent } from './challengeStartedEvent'
+import { UsersAddedEvent } from './usersAddedEvent'
+import { ProgressLoggedEvent } from './progressLoggedEvent'
+import { ChallengeCompletedEvent } from './challengeCompletedEvent'
+import { ChallengeId } from './challenge.Id'
 
 export class ChallengeState {
   constructor(
     readonly id: ChallengeId,
-    readonly habitId: HabitId,
+    readonly habitId: string,
     readonly target: number,
     readonly partner: string,
     readonly project: string,
@@ -21,7 +22,7 @@ export class ChallengeState {
   static empty(): ChallengeState {
     return new ChallengeState(
       ChallengeId.empty(),
-      HabitId.empty(),
+      '',
       0,
       '',
       '',
@@ -36,7 +37,7 @@ export class ChallengeState {
   withChallengeStarted(event: ChallengeStartedEvent): ChallengeState {
     return new ChallengeState(
       event.id,
-      HabitId.create(event.payload.habitId),
+      event.payload.habitId,
       event.payload.target,
       event.payload.partner,
       event.payload.project,
@@ -61,5 +62,39 @@ export class ChallengeState {
       this.status,
       this.progress,
     )
+  }
+
+  withProgressLogged(event: ProgressLoggedEvent): ChallengeState {
+    return new ChallengeState(
+      this.id,
+      this.habitId,
+      this.target,
+      this.partner,
+      this.project,
+      this.cost,
+      this.deadline,
+      [...this.users, event.payload.userId],
+      this.status,
+      this.progress + event.payload.progress,
+    )
+  }
+
+  withChallengeCompleted(event: ChallengeCompletedEvent): ChallengeState {
+    return new ChallengeState(
+      this.id,
+      this.habitId,
+      this.target,
+      this.partner,
+      this.project,
+      this.cost,
+      this.deadline,
+      [...this.users, event.payload.userId],
+      ChallengeStatus.archieved(),
+      this.progress,
+    )
+  }
+
+  hasReachedTheTarget() {
+    return this.target <= this.progress
   }
 }

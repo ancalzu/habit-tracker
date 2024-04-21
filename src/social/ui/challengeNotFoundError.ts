@@ -1,4 +1,4 @@
-import { BaseError } from '../core/error'
+import { BaseError } from '../error'
 
 export class ChallengeNotFoundError extends BaseError {
   private constructor(message: string) {
@@ -6,8 +6,6 @@ export class ChallengeNotFoundError extends BaseError {
   }
 
   static withId(id: string): ChallengeNotFoundError {
-    return new ChallengeNotFoundError(
-      `Challenge with id ${id} not found. You need to create a challenge`,
-    )
+    return new ChallengeNotFoundError(`Challenge with id ${id} not found.`)
   }
 }

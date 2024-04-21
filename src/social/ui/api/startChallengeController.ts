@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
-import { StartChallengeCommandHandler } from '../../application/challenge/startChallengeCommandHandler'
+import { StartChallengeCommandHandler } from '../../application/challenge/startChallengeCommand-handler'
 import { ChallengeId } from '../../../core/domain/challenge/challengeId'
 import { StartChallengeCommand } from '../../application/challenge/startChallengeCommand'
-import { catchError } from '../../../core/ui/api/errorHandler'
+import { catchError } from '../../../core/ui/api/error.handler'
 
 interface StartChallengeDto {
   habitId: string

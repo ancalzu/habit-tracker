@@ -1,6 +1,6 @@
-import { DomainEvent } from '../../../core/domain/domainEvent'
-import { ChallengeId } from '../../../core/domain/challenge/challengeId'
-import { HabitId } from '../../../core/domain/habit/habitId'
+import { DomainEvent } from '../../../../core/domain/domainEvent'
+import { ChallengeId } from '../../../../core/domain/challenge/challengeId'
+import { HabitId } from '../../../../core/domain/habit/habit.Id'
 
 export type ChallengeStartedPayload = {
   readonly challengeId: string
@@ -16,7 +16,7 @@ export type ChallengeStartedPayload = {
 export class ChallengeStartedEvent extends DomainEvent<ChallengeStartedPayload> {
   static readonly Type = 'ChallengeStarted'
 
-  private constructor(id: ChallengeId, payload: ChallengeStartedPayload) {
+  constructor(id: ChallengeId, payload: ChallengeStartedPayload) {
     super(id, ChallengeStartedEvent.Type, payload)
   }
 

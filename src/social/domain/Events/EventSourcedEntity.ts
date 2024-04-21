@@ -1,4 +1,4 @@
-import { DomainEvent } from '../../core/domain/domainEvent'
+import { DomainEvent } from '../../../core/domain/domainEvent'
 
 export abstract class EventSourcedEntity {
   private appliedEvents: DomainEvent[] = []

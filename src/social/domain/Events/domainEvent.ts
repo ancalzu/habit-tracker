@@ -1,5 +1,5 @@
-import { Id } from '../../core/domain/id'
-import { EventId } from '../../core/domain/eventId'
+import { Id } from '../id'
+import { EventId } from './event.Id'
 
 type Primitive = string | number | boolean | null | Date | Array<any>
 type Map = { [key: string]: Primitive }
